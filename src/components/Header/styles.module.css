@@ -4,7 +4,35 @@
     padding: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     box-shadow: 0px 4px 4px #CB6CE6;
     margin-bottom: 20px;
 }
+
+.rightSide{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.leftSide{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.rodrigogoes{
+    width: 100px;
+    height: auto;
+}
+
+.healthyPlan{
+    font-family: 'Lilita One', cursive;
+    font-size: 48px;
+    color: black;
+}
+
