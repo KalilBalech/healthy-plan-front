@@ -28,17 +28,20 @@ export default function SignUp() {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/v1/trainer', userData, {
+      const response = await axios.post('https://healthy-plan-api.onrender.com/v1/trainer', userData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
-      if (response.status === 200) {
+      console.log('response: '+ response);
+      if (response.status === 201) {
         setResponseMessage('Cadastro realizado com sucesso!')
-        console.log("response.data.trainer.id: " + response.data.trainer.id)
+        console.log("response.data.id: " + response.data.id)
       } else {
         setResponseMessage('Erro ao cadastrar usuário')
+        console.log('response:'+response)
+        console.log('response.data:'+response.data)
+        console.log('response.status:'+response.status)
       }
     } catch (error) {
       console.error('Erro ao conectar com a API:', error);
