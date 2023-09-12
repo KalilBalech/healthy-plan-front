@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import axios from 'axios'; // Importe o Axios
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Login.css';
 
-import Button from './Button'
-import Input from './Input'
+import Button from './Button';
+import Input from './Input';
 import Header from './Header';
 import Title from './Title';
 import HeaderMainButton from './Header/HeaderMainButton';
 
-export default function SignUp() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [responseMessage, setResponseMessage] = useState('oi tudo bem futebol corinthians lindo bonito e gostoso chris bumsted aka cbum')
+  const [responseMessage, setResponseMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,30 +25,36 @@ export default function SignUp() {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/v1/session', userData, {
+      const response = await axios.post('https://healthy-plan-api.onrender.com/v1/session', userData, {
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
 
-      if (response.status === 200) {
-        setResponseMessage('Login realizado com sucesso!')
-        console.log("response.data.token: " + response.data.token)
+      if (response.status === 200 || response.status === 201) {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        setResponseMessage('Login realizado com sucesso!');
+        console.log('Token JWT:', token);
+
+        // Use history.push para redirecionar o usuário
+        navigate('/user');
       } else {
-        setResponseMessage('Erro ao logar usuário')
+        setResponseMessage('Erro ao logar usuário');
       }
     } catch (error) {
       console.error('Erro ao conectar com a API:', error);
+      setResponseMessage('Erro ao conectar com a API');
     }
   };
-
   return (
     <div id="loginPage">
-      
       <Header>
-        <HeaderMainButton to='/signup' text='Cadastre-se'/>
+        <HeaderMainButton to='/signup' text='Cadastre-se' />
       </Header>
-      <Title title="Login"/>
+      <Title title="Entrar" />
       <form onSubmit={handleSubmit}>
         <Input
           type="email"
@@ -62,7 +71,7 @@ export default function SignUp() {
           required={true}
         />
         <p>{responseMessage}</p>
-        <Button/>
+        <Button text="Entrar" />
       </form>
     </div>
   );

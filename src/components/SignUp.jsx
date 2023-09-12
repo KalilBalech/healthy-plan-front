@@ -34,7 +34,7 @@ export default function SignUp() {
         },
       });
       console.log('response: '+ response);
-      if (response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         setResponseMessage('Cadastro realizado com sucesso!')
         console.log("response.data.id: " + response.data.id)
       } else {
@@ -92,7 +92,7 @@ export default function SignUp() {
           required={true}
         />
         <p>{responseMessage}</p>
-        <Button/>
+        <Button text='Cadastrar'/>
       </form>
     </div>
   );
