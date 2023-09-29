@@ -1,0 +1,16 @@
+.select{
+    display: block;
+    padding: 20px;
+    margin: 20px auto;
+    min-width: 400px;
+    border-radius: 30px;
+    border: 1px solid #b3b3b3;
+    font-size: 16px;
+    color: black;
+    outline: none;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #b3b3b3;
+    opacity: 1; /* Firefox */
+  }

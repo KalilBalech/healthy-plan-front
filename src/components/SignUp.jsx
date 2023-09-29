@@ -14,7 +14,7 @@ export default function SignUp() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [responseMessage, setResponseMessage] = useState('oi tudo bem futebol corinthians lindo bonito e gostoso chris bumsted aka cbum')
+  const [responseMessage, setResponseMessage] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
