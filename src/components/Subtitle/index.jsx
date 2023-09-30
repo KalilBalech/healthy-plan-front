@@ -1,13 +1,13 @@
 import PropTypes from "prop-types"; // Importe PropTypes corretamente
 import styles from './styles.module.css'
 
-export default function Title(props){
+export default function Subtitle(props){
     return(
-        <h1 className={styles.title}>{props.title}</h1>
+        <h1 className={styles.subtitle}>{props.subtitle}</h1>
     )
 }
 
-Title.propTypes = {
-    title: PropTypes.string.isRequired,
+Subtitle.propTypes = {
+    subtitle: PropTypes.string.isRequired,
   };
   

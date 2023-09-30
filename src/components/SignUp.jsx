@@ -36,7 +36,9 @@ export default function SignUp() {
       console.log('response: '+ response);
       if (response.status === 200 || response.status === 201) {
         setResponseMessage('Cadastro realizado com sucesso!')
-        console.log("response.data.id: " + response.data.id)
+        const personalID = response.data.id
+        console.log("response.data.id: " + personalID)
+        localStorage.setItem('personalID', personalID)
       } else {
         setResponseMessage('Erro ao cadastrar usuário')
         console.log('response:'+response)

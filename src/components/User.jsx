@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import "./User.css";
 import Header from "./Header";
 import Title from "./Title";
+import Subtitle from "./Subtitle";
 import Input from './Input';
 import Select from './Select';
 import Button from './Button';
@@ -23,6 +24,29 @@ export default function User() {
   const [state, setState] = useState('');
   const [responseMessage, setResponseMessage] = useState('')
 
+  const [personalName, setPersonalName] = useState('')
+  const [personalEmail, setPersonalEmail] = useState('')
+
+  useEffect(() => {
+    const personalID = localStorage.getItem('personalID');
+    const token = localStorage.getItem('token');
+  
+    axios.get(`https://healthy-plan-api.onrender.com/v1/trainer/${personalID}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      setPersonalName(response.data.name)
+      setPersonalEmail(response.data.email)
+      console.log('response:', response);
+      console.log('response.data:', response.data);
+    })
+    .catch((error) => {
+      console.error('Erro ao buscar dados:', error);
+    });
+  }, [personalName]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,16 +65,31 @@ export default function User() {
     };
 
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.post('https://healthy-plan-api.onrender.com/v1/athlete', userData, {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
       });
       console.log('response: '+ response);
       setResponseMessage('response: '+ response)
       if (response.status === 200 || response.status === 201) {
         setResponseMessage('Cadastro realizado com sucesso!')
+        console.log("response.data: " + response.data)
+        console.log("response.id: " + response.id)
         console.log("response.data.id: " + response.data.id)
+        setName('')
+        setSurname('')
+        setPhone('')
+        setEmail('')
+        setSex('')
+        setBirthDate('')
+        setAddressInfo('')
+        setAddressNumber('')
+        setCep('')
+        setCity('')
+        setState('')
       } else {
         setResponseMessage('Erro ao cadastrar usuário')
         console.log('response:'+response)
@@ -64,8 +103,11 @@ export default function User() {
 
   return (
     <div id="userPage">
-      <Header></Header>
-      <Title title="Perfil de Personal Trainer" />
+      <Header>
+        <p id="personal-email">{personalEmail}</p>
+      </Header>
+      <Title title={"Bem-Vindo Personal "+personalName} />
+      <Subtitle subtitle='Deseja adicionar um novo atleta?'></Subtitle>
       <form onSubmit={handleSubmit}>
       <Input
           type="text"

@@ -2,6 +2,7 @@ import "./Home.css";
 
 import Header from "./Header";
 import Title from "./Title";
+import Footer from "./Footer";
 import HeaderMainButton from "./Header/HeaderMainButton";
 import HomeDiv from "./HomeDiv";
 
@@ -49,6 +50,7 @@ export default function SignUp() {
           <p>Suporte Dedicado</p>
         </HomeDiv>
       </div>
+      <Footer/>
     </div>
   );
 }

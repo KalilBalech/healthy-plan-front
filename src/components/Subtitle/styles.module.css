@@ -1,6 +1,6 @@
-.title{
-    font-family: 'Lilita One', cursive;
+.subtitle{
     font-weight: 400;
-    font-size: 48px;
+    font-size: 24px;
     margin: 20px;
+    align-self:flex-start
 }
