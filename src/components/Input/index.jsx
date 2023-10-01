@@ -5,13 +5,13 @@ export default function Input(props) {
   return props.required ? (
     <input
       {...props}
-      className={styles.input}
+      className={props.block ? styles.input : styles.inputNotBlock}
       required
     />
   ) : (
     <input
       {...props}
-      className={styles.input}
+      className={props.block ? styles.input : styles.inputNotBlock}
     />
   );
 }
@@ -22,4 +22,5 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  block: PropTypes.bool,
 };

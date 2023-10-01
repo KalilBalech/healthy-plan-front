@@ -35,7 +35,7 @@ export default function Login() {
 
       if (response.status === 200 || response.status === 201) {
         const token = response.data.token;
-        //localStorage.setItem('token', token);
+        localStorage.setItem('token', token);
         setResponseMessage('Login realizado com sucesso!');
         console.log('Token JWT:', token);
 
@@ -57,6 +57,7 @@ export default function Login() {
       <Title title="Entrar" />
       <form onSubmit={handleSubmit}>
         <Input
+          block = {true}
           type="email"
           placeholder="Email"
           value={email}
@@ -64,6 +65,7 @@ export default function Login() {
           required={true}
         />
         <Input
+          block = {true}
           type="password"
           placeholder="Senha"
           value={password}

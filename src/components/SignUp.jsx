@@ -47,6 +47,12 @@ export default function SignUp() {
       }
     } catch (error) {
       console.error('Erro ao conectar com a API:', error);
+      console.error('ESSE AQUI É O ERRO: ', error);
+      console.error('erro.response: ', error.response);
+      console.error('erro.response.data: ', error.response.data);
+      console.error('erro.response.data.error: ', error.response.data.error);
+      setResponseMessage(error.response.data.error);
+      console.log('erro.response.data.error type: ', typeof error.response.data.error);
     }
   };
 
@@ -59,6 +65,7 @@ export default function SignUp() {
       <Title title="Cadastre-se"/>
       <form onSubmit={handleSubmit}>
       <Input
+        block = {true}
           type="text"
           placeholder="Nome"
           value={name}
@@ -66,6 +73,7 @@ export default function SignUp() {
           required={true}
         />
         <Input
+          block = {true}
           type="text"
           placeholder="Sobrenome"
           value={surname}
@@ -73,6 +81,7 @@ export default function SignUp() {
           required={true}
         />
         <Input
+          block = {true}
           type="number"
           placeholder="Telefone"
           value={phone}
@@ -80,6 +89,7 @@ export default function SignUp() {
           required={true}
         />
         <Input
+          block = {true}
           type="email"
           placeholder="Email"
           value={email}
@@ -87,6 +97,7 @@ export default function SignUp() {
           required={true}
         />
         <Input
+          block = {true}
           type="password"
           placeholder="Senha"
           value={password}

@@ -5,13 +5,13 @@ export default function Select(props) {
   return props.required ? (
     <select
       {...props}
-      className={styles.select}
+      className={props.block ? styles.select : styles.selectNotBlock}
       required
     >{props.children}</select>
   ) : (
     <select
       {...props}
-      className={styles.select}
+      className={props.block ? styles.select : styles.selectNotBlock}
     >{props.children}</select>
   );
 }
@@ -21,5 +21,6 @@ Select.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  block: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
