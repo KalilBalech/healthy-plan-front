@@ -1,6 +1,7 @@
 {
   "name": "healthy-plan-front-main",
   "private": true,
+  "homepage": "https://kalilbalech.github.io/healthy-plan-front",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
