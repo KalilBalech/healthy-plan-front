@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"; // Importe PropTypes corretamente
 import Title from "../Title";
+import styles from "./styles.module.css";
 
-import styles from './styles.module.css'
 
 export default function HomeDiv(props) {
   return props.imageFirst ? (

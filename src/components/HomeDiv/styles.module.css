@@ -26,7 +26,7 @@ img{
 .texto{
     width: 30vw;
     height: 70vh;
-    border: 1px solid #cb6ce6;
+    border: 2px solid #cb6ce6;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -34,7 +34,7 @@ img{
     padding: 20px;
     border-radius: 50px;
     box-shadow: #cb6ce6 4px 4px 4px;
-    font-size: 32px;
+    font-size: 50px;
     text-align: center;
     line-height: 1.8;
 }
