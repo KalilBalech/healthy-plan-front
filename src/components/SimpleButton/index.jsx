@@ -10,5 +10,5 @@ export default function Button(props){
 }
 
 Button.propTypes = {
-    text: PropTypes.string
-};
+    text: PropTypes.string.isRequired,
+}

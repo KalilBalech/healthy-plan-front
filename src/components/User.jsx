@@ -10,7 +10,6 @@ import Select from './Select';
 import Button from './Button';
 import Athlete from './Athlete';
 
-
 export default function User() {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -32,7 +31,6 @@ export default function User() {
 
   const [reloadAthletes, setReloadAthletes] = useState(false); // Novo estado para atuar como trigger
 
-
   useEffect(() => {
     const personalID = localStorage.getItem('personalID');
     const token = localStorage.getItem('token');
@@ -45,6 +43,7 @@ export default function User() {
     .then((response) => {
       setPersonalName(response.data.name)
       setPersonalEmail(response.data.email)
+      console.log("Busca pelos dados do treinador")
       console.log('response:', response);
       console.log('response.data:', response.data);
     })
@@ -52,7 +51,7 @@ export default function User() {
       console.error('Erro ao buscar dados:', error);
     });
     
-  }, [personalName]);
+  }, []);
   
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -131,7 +130,7 @@ export default function User() {
   };
 
   const listAthletes = athletes ? athletes.map(athlete =>
-    <Athlete key={athlete.id} name={athlete.name} surname={athlete.surname} email={athlete.email} id={athlete.id}>
+    <Athlete key={parseInt(athlete.id)} name={athlete.name} surname={athlete.surname} email={athlete.email} sex={athlete.sex} phone={athlete.phone} birthDate={athlete.birthDate} id={athlete.id}>
     </Athlete>
   ) : <p>não há atletas</p>
 

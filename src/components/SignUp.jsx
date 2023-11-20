@@ -62,7 +62,7 @@ export default function SignUp() {
       <Header>
         <HeaderMainButton to='/login' text='Login'/>
       </Header>
-      <Title title="Cadastre-se"/>
+      <Title title="Cadastre-se, treinador"/>
       <form onSubmit={handleSubmit}>
       <Input
         block = {true}

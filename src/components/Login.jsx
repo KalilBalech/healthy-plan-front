@@ -54,7 +54,7 @@ export default function Login() {
       <Header>
         <HeaderMainButton to='/signup' text='Cadastre-se' />
       </Header>
-      <Title title="Entrar" />
+      <Title title="Se conecte, treinador" />
       <form onSubmit={handleSubmit}>
         <Input
           block = {true}

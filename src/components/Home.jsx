@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import HeaderMainButton from "./Header/HeaderMainButton";
 import HomeDiv from "./HomeDiv";
 
-export default function SignUp() {
+export default function Home() {
   return (
     <div id="homePage">
       <Header>

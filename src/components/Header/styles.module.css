@@ -10,6 +10,7 @@
     justify-content: space-between;
     box-shadow: 0px 4px 4px #CB6CE6;
     margin-bottom: 20px;
+    z-index: 10000;
 }
 
 .rightSide{
