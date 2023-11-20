@@ -5,13 +5,13 @@ import Select from "../Select";
 import Title from "../Title";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import axios from "axios";
 
 export default function Athlete(props) {
   const id = props.id;
-  const birthDateFomated = props.birthDate.split("T")[0];
+  const birthDateFomated = props.birthDate;
   const authTOKEN = localStorage.getItem("token");
 
   const [isCreateAnamnesisModalOpen, setIsCreateAnamnesisModalOpen] =
@@ -25,15 +25,15 @@ export default function Athlete(props) {
   const [surname, setSurname] = useState(props.surname);
   const [email, setEmail] = useState(props.email);
   const [phone, setPhone] = useState(parseInt(props.phone));
-  const [sex, setSex] = useState(props.sex);
-  const [birthDate, setBirthDate] = useState(birthDateFomated);
+  // const [sex, setSex] = useState(props.sex);
+  // const [birthDate, setBirthDate] = useState(props.birthDate);
 
   const [provName, setProvName] = useState(props.name);
   const [provSurname, setProvSurname] = useState(props.surname);
   const [provEmail, setProvEmail] = useState(props.email);
   const [provPhone, setProvPhone] = useState(parseInt(props.phone));
-  const [provSex, setProvSex] = useState(props.sex);
-  const [provBirthDate, setProvBirthDate] = useState(birthDateFomated);
+  // const [provSex, setProvSex] = useState(props.sex);
+  // const [provBirthDate, setProvBirthDate] = useState(birthDateFomated);
 
   const [isAlcoholic, setIsAlcoholic] = useState(false);
   const [isSmoker, setIsSmoker] = useState(false);
@@ -91,6 +91,15 @@ export default function Athlete(props) {
   const [leftCalf_circ_cm, setleftCalf_circ_cm] = useState(0);
   const [fatPercentage, setfatPercentage] = useState(0);
   // const [AthleteId] = useState(id);
+
+  useEffect(()=>{
+    // console.log("ENTROU NO USEEFFECT DO ATLETA: " + typeof props.id);
+    // console.log('name: '+name + ' do tipo: ' +  typeof props.name)
+    // console.log('surname: '+surname + ' do tipo: ' + typeof props.surname)
+    // console.log('sex: '+sex + ' tipo: ' + typeof props.sex)
+    // console.log('email: '+email + ' do tipo' + typeof props.email)
+    // console.log('birthDate recebido pelo atleta: '+props.birthDate + ' do tipo' + typeof props.birthDate)
+  })
 
 
   const handleCreateAnamnesis = async (e) => {
@@ -305,7 +314,7 @@ export default function Athlete(props) {
       rightCalf_circ_cm,
       leftCalf_circ_cm,
       fatPercentage,
-      athleteId: AthleteId
+      athleteId: AthleteId // erro de padronização na api... as vezes athleteId deve ser mandado com a maiusculo, as vezs com a minusculo
     };
     
     console.log("ageAtTheMoment: " + ageAtTheMoment + " type: " + typeof ageAtTheMoment);
@@ -394,8 +403,8 @@ export default function Athlete(props) {
       surname: provSurname,
       phone: provPhone,
       email: provEmail,
-      sex: provSex,
-      birthDate: provBirthDate,
+      // sex: provSex,
+      // birthDate: provBirthDate,
     };
 
     await axios
@@ -417,8 +426,8 @@ export default function Athlete(props) {
         setSurname(athleteNewData.surname);
         setPhone(athleteNewData.phone);
         setEmail(athleteNewData.email);
-        setSex(athleteNewData.sex);
-        setBirthDate(athleteNewData.birthDate);
+        // setSex(athleteNewData.sex);
+        // setBirthDate(athleteNewData.birthDate);
       })
       .catch((error) => {
         alert(
@@ -1003,8 +1012,8 @@ export default function Athlete(props) {
                   setProvSurname(surname);
                   setProvEmail(email);
                   setProvPhone(phone);
-                  setProvSex(sex);
-                  setProvBirthDate(birthDate);
+                  // setProvSex(sex);
+                  // setProvBirthDate(birthDate);
                 }}
               >
                 x
@@ -1029,8 +1038,8 @@ export default function Athlete(props) {
                 />
                 <Input
                   block={true}
-                  type="text"
-                  placeholder={"Número de telefone"}
+                  type="number"
+                  placeholder="Número de telefone"
                   value={provPhone}
                   onChange={(e) => setProvPhone(e.target.value)}
                   required={true}
@@ -1043,7 +1052,7 @@ export default function Athlete(props) {
                   onChange={(e) => setProvEmail(e.target.value)}
                   required={true}
                 />
-                <Select
+                {/* <Select
                   name="Genero"
                   id="Genero"
                   placeholder="Genero"
@@ -1062,7 +1071,7 @@ export default function Athlete(props) {
                   value={provBirthDate}
                   onChange={(e) => setProvBirthDate(e.target.value)}
                   required={true}
-                />
+                /> */}
                 <Button text="Enviar" />
               </form>
             </div>
@@ -1079,6 +1088,4 @@ Athlete.propTypes = {
   surname: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
-  birthDate: PropTypes.string.isRequired,
-  sex: PropTypes.string.isRequired,
 };

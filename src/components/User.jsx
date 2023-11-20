@@ -15,14 +15,17 @@ export default function User() {
   const [surname, setSurname] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [sex, setSex] = useState('');
+  const [sex, setSex] = useState('Masculino');
   const [birthDate, setBirthDate] = useState(''); 
-  const [addressInfo, setAddressInfo] = useState('');
-  const [addressNumber, setAddressNumber] = useState('');
+  const [observation, setObservation] = useState('')
+  const [addressInfo, setAddressInfo] = useState('')
+  const [addressNumber, setAddressNumber] = useState('')
   const [cep, setCep] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+
   const [responseMessage, setResponseMessage] = useState('')
+
 
   const [personalName, setPersonalName] = useState('')
   const [personalEmail, setPersonalEmail] = useState('')
@@ -34,6 +37,7 @@ export default function User() {
   useEffect(() => {
     const personalID = localStorage.getItem('personalID');
     const token = localStorage.getItem('token');
+    // console.log('SEX INICIAL: ' + sex + ' do tipo: ' + typeof sex);
   
     axios.get(`https://healthy-plan-api.onrender.com/v1/trainer/${personalID}`, {
       headers: {
@@ -52,6 +56,16 @@ export default function User() {
     });
     
   }, []);
+
+  // useEffect(()=>{
+  //   console.log("BIRTHDATE DO ENVIADO PELO TREINADOR")
+  //   console.log('BIRTHDATE: ' + birthDate + ' do tipo: '+ typeof birthDate + ' de tamanho: ' + birthDate.length)
+  // }, [birthDate])
+
+  // useEffect(()=>{
+  //   console.log("SEX ALTERADO")
+  //   console.log('SEX: ' + sex + ' do tipo: '+ typeof sex + ' de tamanho: ' + sex.length)
+  // }, [sex])
   
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -84,12 +98,15 @@ export default function User() {
       email,
       sex,
       birthDate,
+      observation,
       addressInfo,
       addressNumber,
       cep,
       city,
       state
     };
+
+    console.log('USERDATA ENVIADO NA CRIAÇÃO DO ATLETA:', userData);
 
     try {
       const token = localStorage.getItem('token');
@@ -113,6 +130,7 @@ export default function User() {
         setEmail('')
         setSex('')
         setBirthDate('')
+        setObservation('')
         setAddressInfo('')
         setAddressNumber('')
         setCep('')
@@ -126,11 +144,12 @@ export default function User() {
       }
     } catch (error) {
       console.error('Erro ao conectar com a API:', error);
+      setResponseMessage('Erro ao cadastrar usuário: ' + error.response.data.error)
     }
   };
 
-  const listAthletes = athletes ? athletes.map(athlete =>
-    <Athlete key={parseInt(athlete.id)} name={athlete.name} surname={athlete.surname} email={athlete.email} sex={athlete.sex} phone={athlete.phone} birthDate={athlete.birthDate} id={athlete.id}>
+  const listAthletes = athletes ? athletes.map(athlete => // erro na api - ao fazer o get, nao retorna o sexo nem o birthDate
+    <Athlete key={parseInt(athlete.id)} name={athlete.name} surname={athlete.surname} email={athlete.email} /*sex={athlete.sex}*/ phone={athlete.phone} /*birthDate={athlete.birthDate}*/ id={athlete.id}>
     </Athlete>
   ) : <p>não há atletas</p>
 
@@ -176,7 +195,9 @@ export default function User() {
             onChange={(e) => setEmail(e.target.value)}
             required={true}
           />
-          <Select name="Genero" id="Genero" placeholder='Genero' value={sex} onChange={(e) => setSex(e.target.value)} required={true}>
+          <Select name="Genero" id="Genero" placeholder='Genero' value={sex} onChange={(e) =>{
+            setSex(e.target.value)
+          }} required={false}>
             <option value="Masculino">Masculino</option>
             <option value="Feminino">Feminino</option>
             <option value="Neutre">Neutre</option>
@@ -186,7 +207,9 @@ export default function User() {
             type="date"
             placeholder="Data de Nascimento"
             value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
+            onChange={(e) => {
+              setBirthDate(e.target.value)
+            }}
             required={true}
           />
           <Input
@@ -203,15 +226,23 @@ export default function User() {
             placeholder="Endereço da Residência"
             value={addressInfo}
             onChange={(e) => setAddressInfo(e.target.value)}
-            required={true}
+            required={false}
             />
+          <Input
+            block = {false}
+            type="text"
+            placeholder="Observações"
+            value={observation}
+            onChange={(e) => setObservation(e.target.value)}
+            required={false}
+          />
           <Input
             block = {false}
             type="number"
             placeholder="Número da Residência"
             value={addressNumber}
             onChange={(e) => setAddressNumber(e.target.value)}
-            required={true}
+            required={false}
           />
           <Input
             block = {false}
@@ -219,7 +250,7 @@ export default function User() {
             placeholder="Cidade"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            required={true}
+            required={false}
           />
           <Input
             block = {false}
@@ -227,7 +258,7 @@ export default function User() {
             placeholder="Estado"
             value={state}
             onChange={(e) => setState(e.target.value)}
-            required={true}
+            required={false}
             />
           <p>{responseMessage}</p>
           <Button text="Adicionar Atleta" />

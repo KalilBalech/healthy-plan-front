@@ -4,11 +4,11 @@ import PropTypes from "prop-types"; // Importe PropTypes corretamente
 export default function Input(props) {
   return (<>
     {props.type == "checkbox" && <label>{props.label}</label>}
-    {props.type == "number" && <label>{props.placeholder}</label>}
+    {/* {props.type == "number" && <label>{props.placeholder}</label>} */}
     <input
       {...props}
       className={props.block ? styles.input : styles.inputNotBlock}
-      required={props.required ? true : undefined}
+      required={props.required ? true : false}
       />
     </>
 );
