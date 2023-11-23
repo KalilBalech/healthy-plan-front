@@ -29,13 +29,23 @@ export default function Login() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
 
       if (response.status === 200 || response.status === 201) {
+
         const token = response.data.token;
+        const base64Payload = token.split('.')[1];
+        const payload = atob(base64Payload);
+        const payloadObject = JSON.parse(payload);
+        const personalID = payloadObject.sub;
+
+        console.log('personalID: ', personalID)
+        console.log('payloadObject: ', payloadObject)
+
         localStorage.setItem('token', token);
+        localStorage.setItem('personalID', personalID);
+
         setResponseMessage('Login realizado com sucesso!');
         console.log('Token JWT:', token);
 

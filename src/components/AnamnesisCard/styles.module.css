@@ -1,6 +1,6 @@
 .athleteContainer{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content:center;
     align-items: center;
     margin: 10px;
@@ -9,7 +9,13 @@
     border-radius: 20px;
     width: 100%;
     position: relative;
+    text-align: center;
 }
+
+.athleteContainer:hover{
+    cursor: pointer;
+}
+
 .athlete{
     display: flex;
     flex-direction: column;

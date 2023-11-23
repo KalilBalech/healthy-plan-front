@@ -158,8 +158,8 @@ export default function User() {
       <Header>
         <p id="personal-email">{personalEmail}</p>
       </Header>
-      <Title title={"Bem-Vindo Personal "+personalName} />
-      <Subtitle subtitle='Deseja adicionar um novo atleta?'></Subtitle>
+      <Title title={personalName + ", bem-vindo ao seu perfil!"} />
+      <Subtitle subtitle='Crie um novo atleta ou gerencie os atuais!'></Subtitle>
       <div id='forms'>
 
         <form onSubmit={handleSubmit}>

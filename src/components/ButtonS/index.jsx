@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 export default function ButtonS(props){
     return(
-        <button type="submit" className={styles.button} onClick={props.OnClickFunction}>
+        <button type="submit" className={styles.button} onClick={props.onClick}>
             {props.text}
         </button>
     )
@@ -12,5 +12,5 @@ export default function ButtonS(props){
 
 ButtonS.propTypes = {
     text: PropTypes.string,
-    OnClickFunction: PropTypes.func
+    onClick: PropTypes.func
 };

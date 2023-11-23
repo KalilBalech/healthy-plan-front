@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 
+import Plot from "react-plotly.js";
+
 export default function Athlete(props) {
   const id = props.id;
   // const birthDateFomated = props.birthDate;
@@ -26,24 +28,20 @@ export default function Athlete(props) {
   const [reloadAnamnesis, setReloadAnamnesis] = useState(false);
   const [anamnesis, setAnamnesis] = useState([]);
 
-  useEffect(()=>{
-    getAnamnesis()
-    console.log(anamnesis)
-  }, [])
+  useEffect(() => {
+    getAnamnesis();
+    console.log(anamnesis);
+  }, []);
 
-  useEffect(()=>{
-    getAnamnesis()
-    console.log(anamnesis)
-  }, [reloadAnamnesis])
+  useEffect(() => {
+    getAnamnesis();
+    console.log(anamnesis);
+  }, [reloadAnamnesis]);
 
-  // useEffect(()=>{
-  //   getAnamnesis()
-  // }, [reloadAnamnesis])
-  
   // const [isBodyEvaluationModalOpen, setBodyEvaluationModalOpen] = useState(false);
   // const [reloadBodyEvaluation, setReloadBodyEvaluation] = useState(false);
   // const [bodyEvaluation, setBodyEvaluation] = useState([]);
-  
+
   const [name, setName] = useState(props.name);
   const [surname, setSurname] = useState(props.surname);
   const [email, setEmail] = useState(props.email);
@@ -92,7 +90,7 @@ export default function Athlete(props) {
   const [leanMass_kg, setleanMass_kg] = useState(null);
   const [weight_cm, setweight_cm] = useState(null);
   const [height_kg, setheight_kg] = useState(null);
-  const [bodyMassClass, setbodyMassClass] = useState('');
+  const [bodyMassClass, setbodyMassClass] = useState("");
   const [bodyMassIndex, setbodyMassIndex] = useState(null);
   const [skeletalMass, setskeletalMass] = useState(null);
   const [bodyAge, setbodyAge] = useState(null);
@@ -113,14 +111,10 @@ export default function Athlete(props) {
   const [rightCalf_circ_cm, setrightCalf_circ_cm] = useState(null);
   const [leftCalf_circ_cm, setleftCalf_circ_cm] = useState(null);
   const [fatPercentage, setfatPercentage] = useState(null);
-  // const [AthleteId] = useState(id);
 
-  const handleCreateAnamnesis = async (e) => {
-    console.log("ENTROU NA FUNÇÃO CREATE ANAMNESIS")
+  const createAnamnesis = async (e) => {
     e.preventDefault();
-    console.log("SYSTOLITIC BLOOD PRESSURE: " + systolicBloodPressure + " tipo: "+typeof systolicBloodPressure);
     setSystolicBloodPressure(parseInt(systolicBloodPressure));
-    console.log("SYSTOLITIC BLOOD PRESSURE: " + systolicBloodPressure + " tipo: "+typeof systolicBloodPressure);
     setDiastolicBloodPressure(parseInt(diastolicBloodPressure));
     setAmountWater(parseInt(AmountWater));
     setRestingHeartRate(parseInt(restingHeartRate));
@@ -154,99 +148,6 @@ export default function Athlete(props) {
       additionalObservations,
     };
 
-    console.log("isAlcoholic: " + isAlcoholic + " type: " + typeof isAlcoholic);
-    console.log("isSmoker: " + isSmoker + " type: " + typeof isSmoker);
-    console.log(
-      "sleepQuality: " + sleepQuality + " type: " + typeof sleepQuality
-    );
-    console.log(
-      "PhysicalActivityHabits: " +
-        PhysicalActivityHabits +
-        " type: " +
-        typeof PhysicalActivityHabits
-    );
-    console.log(
-      "HydrationHabits: " + HydrationHabits + " type: " + typeof HydrationHabits
-    );
-    console.log(
-      "EatingHabits: " + EatingHabits + " type: " + typeof EatingHabits
-    );
-    console.log("AmountWater: " + AmountWater + " type: " + typeof AmountWater);
-    console.log(
-      "UseFoodSupplement: " +
-        UseFoodSupplement +
-        " type: " +
-        typeof UseFoodSupplement
-    );
-    console.log("isAnemic: " + isAnemic + " type: " + typeof isAnemic);
-    console.log("isDiabetic: " + isDiabetic + " type: " + typeof isDiabetic);
-    console.log(
-      "systolicBloodPressure: " +
-        systolicBloodPressure +
-        " type: " +
-        typeof systolicBloodPressure
-    );
-    console.log(
-      "diastolicBloodPressure: " +
-        diastolicBloodPressure +
-        " type: " +
-        typeof diastolicBloodPressure
-    );
-    console.log(
-      "restingHeartRate: " +
-        restingHeartRate +
-        " type: " +
-        typeof restingHeartRate
-    );
-    console.log("haveAnxiety: " + haveAnxiety + " type: " + typeof haveAnxiety);
-    console.log(
-      "haveDepression: " + haveDepression + " type: " + typeof haveDepression
-    );
-    console.log(
-      "haveBipolarDisorder: " +
-        haveBipolarDisorder +
-        " type: " +
-        typeof haveBipolarDisorder
-    );
-    console.log(
-      "haveObsessiveCompDisorder: " +
-        haveObsessiveCompDisorder +
-        " type: " +
-        typeof haveObsessiveCompDisorder
-    );
-    console.log(
-      "haveOtherDisorders: " +
-        haveOtherDisorders +
-        " type: " +
-        typeof haveOtherDisorders
-    );
-    console.log("AthleteId: " + AthleteId + " type: " + typeof AthleteId);
-    console.log(
-      "heartProblems: " + heartProblems + " type: " + typeof heartProblems
-    );
-    console.log("allergies: " + allergies + " type: " + typeof allergies);
-    console.log(
-      "otherDiseases: " + otherDiseases + " type: " + typeof otherDiseases
-    );
-    console.log(
-      "medicalTreatments: " +
-        medicalTreatments +
-        " type: " +
-        typeof medicalTreatments
-    );
-    console.log(
-      "medicationUse: " + medicationUse + " type: " + typeof medicationUse
-    );
-    console.log(
-      "UseHealthDevice: " + UseHealthDevice + " type: " + typeof UseHealthDevice
-    );
-    console.log(
-      "additionalObservations: " +
-        additionalObservations +
-        " type: " +
-        typeof additionalObservations
-    );
-    console.log("TOKEN DA HEADER PARA MOSTRAR AUTORIZAÇÃO: " + authTOKEN)
     await axios
       .post("https://healthy-plan-api.onrender.com/v1/anamnesis", userData, {
         headers: {
@@ -256,7 +157,6 @@ export default function Athlete(props) {
         },
       })
       .then((response) => {
-        console.log("Anamnesis criada com sucesso");
         setIsAlcoholic(false);
         setIsSmoker(false);
         setSleepQuality("");
@@ -284,11 +184,8 @@ export default function Athlete(props) {
         setAdditionalObservations("");
         setIsCreateAnamnesisModalOpen(false);
         if (response.status === 200 || response.status === 201) {
-          console.log("ANAMNESIS CRIADA COM SUCESSO")
+          console.log("ANAMNESIS CRIADA COM SUCESSO");
           setReloadAnamnesis(!reloadAnamnesis);
-          // const token = response.data.token;
-          // localStorage.setItem("token", token);
-          // console.log("Token JWT:", token);
         }
       })
       .catch((error) => {
@@ -296,10 +193,8 @@ export default function Athlete(props) {
         console.error("Erro ao conectar com a API:", error);
       });
   };
-  const handleCreateBodyEvaluation = async (e) => {
+  const createBodyEvaluation = async (e) => {
     e.preventDefault();
-    console.log("ENTROU NA FUNÇÃO CREATE BODY EVALUATION")
-
 
     const userData = {
       ageAtTheMoment,
@@ -328,59 +223,34 @@ export default function Athlete(props) {
       rightCalf_circ_cm,
       leftCalf_circ_cm,
       fatPercentage,
-      athleteId: AthleteId // erro de padronização na api... as vezes athleteId deve ser mandado com a maiusculo, as vezs com a minusculo
+      athleteId: AthleteId, // erro de padronização na api... as vezes athleteId deve ser mandado com a maiusculo, as vezs com a minusculo
     };
-    
-    console.log("ageAtTheMoment: " + ageAtTheMoment + " type: " + typeof ageAtTheMoment);
-    console.log("fatMass_kg: " + fatMass_kg + " type: " + typeof fatMass_kg);
-    console.log("leanMass_kg: " + leanMass_kg + " type: " + typeof leanMass_kg);
-    console.log("weight_cm: " + weight_cm + " type: " + typeof weight_cm);
-    console.log("height_kg: " + height_kg + " type: " + typeof height_kg);
-    console.log("bodyMassClass: " + bodyMassClass + " type: " + typeof bodyMassClass);
-    console.log("bodyMassIndex: " + bodyMassIndex + " type: " + typeof bodyMassIndex);
-    console.log("skeletalMass: " + skeletalMass + " type: " + typeof skeletalMass);
-    console.log("bodyAge: " + bodyAge + " type: " + typeof bodyAge);
-    console.log("basalMetabolicRate: " + basalMetabolicRate + " type: " + typeof basalMetabolicRate);
-    console.log("waistRatioHip: " + waistRatioHip + " type: " + typeof waistRatioHip);
-    console.log("visceralFat: " + visceralFat + " type: " + typeof visceralFat);
-    console.log("neck_circ_cm: " + neck_circ_cm + " type: " + typeof neck_circ_cm);
-    console.log("chest_circ_cm: " + chest_circ_cm + " type: " + typeof chest_circ_cm);
-    console.log("rightForearm_circ_cm: " + rightForearm_circ_cm + " type: " + typeof rightForearm_circ_cm);
-    console.log("leftForearm_circ_cm: " + leftForearm_circ_cm + " type: " + typeof leftForearm_circ_cm);
-    console.log("rightArm_circ_cm: " + rightArm_circ_cm + " type: " + typeof rightArm_circ_cm);
-    console.log("leftArm_circ_cm: " + leftArm_circ_cm + " type: " + typeof leftArm_circ_cm);
-    console.log("waist_circ_cm: " + waist_circ_cm + " type: " + typeof waist_circ_cm);
-    console.log("abdomen_circ_cm: " + abdomen_circ_cm + " type: " + typeof abdomen_circ_cm);
-    console.log("hip_circ_cm: " + hip_circ_cm + " type: " + typeof hip_circ_cm);
-    console.log("rightThigh_circ_cm: " + rightThigh_circ_cm + " type: " + typeof rightThigh_circ_cm);
-    console.log("leftThigh_circ_cm: " + leftThigh_circ_cm + " type: " + typeof leftThigh_circ_cm);
-    console.log("rightCalf_circ_cm: " + rightCalf_circ_cm + " type: " + typeof rightCalf_circ_cm);
-    console.log("leftCalf_circ_cm: " + leftCalf_circ_cm + " type: " + typeof leftCalf_circ_cm);
-    console.log("fatPercentage: " + fatPercentage + " type: " + typeof fatPercentage);
-    console.log("AthleteId: " + AthleteId + " type: " + typeof AthleteId);
-    
+
     await axios
-      .post("https://healthy-plan-api.onrender.com/v1/body-evaluation", userData, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .post(
+        "https://healthy-plan-api.onrender.com/v1/body-evaluation",
+        userData,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((response) => {
-        console.log("Avaliação corporal criada com sucesso");
         setageAtTheMoment(null);
         setfatMass_kg(null);
         setleanMass_kg(null);
         setweight_cm(null);
         setheight_kg(null);
-        setbodyMassClass('');
+        setbodyMassClass("");
         setbodyMassIndex(null);
         setskeletalMass(null);
         setbodyAge(null);
         setbasalMetabolicRate(null);
         setwaistRatioHip(null);
-        setvisceralFat('');
+        setvisceralFat("");
         setneck_circ_cm(null);
         setchest_circ_cm(null);
         setrightForearm_circ_cm(null);
@@ -395,12 +265,9 @@ export default function Athlete(props) {
         setrightCalf_circ_cm(null);
         setleftCalf_circ_cm(null);
         setfatPercentage(null);
-        
+
         if (response.status === 200 || response.status === 201) {
-          console.log("BODY EVALUATION CRIADA COM SUCESSO")
-          // const token = response.data.token;
-          // localStorage.setItem("token", token);
-          // console.log("Token JWT:", token);
+          console.log("BODY EVALUATION CRIADA COM SUCESSO");
         }
       })
       .catch((error) => {
@@ -408,7 +275,6 @@ export default function Athlete(props) {
         console.error("Erro ao conectar com a API:", error);
       });
   };
-
   const editAthlete = async (e) => {
     e.preventDefault();
 
@@ -449,7 +315,6 @@ export default function Athlete(props) {
         );
       });
   };
-
   const deleteAthlete = () => {
     axios
       .delete(`https://healthy-plan-api.onrender.com/v1/athlete/${id}`, {
@@ -469,25 +334,22 @@ export default function Athlete(props) {
         );
       });
   };
-
   const getAnamnesis = async () => {
     await axios
-      .get(`https://healthy-plan-api.onrender.com/v1/athlete/${props.id}/anamnesis`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .get(
+        `https://healthy-plan-api.onrender.com/v1/athlete/${props.id}/anamnesis`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((response) => {
         console.log("Anamnesis buscada com sucesso");
         if (response.status === 200 || response.status === 201) {
-          console.log("ANAMNESIS BUSCADA COM SUCESSO")
-          console.log("response.data.anamnesis ", response.data.anamnesis)
-          setAnamnesis(response.data.anamnesis)
-          // const token = response.data.token;
-          // localStorage.setItem("token", token);
-          // console.log("Token JWT:", token);
+          setAnamnesis(response.data.anamnesis);
         }
       })
       .catch((error) => {
@@ -497,22 +359,19 @@ export default function Athlete(props) {
   };
   const getBodyEvaluation = async () => {
     await axios
-      .get(`https://healthy-plan-api.onrender.com/v1/athlete/${props.id}/body-evaluation`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .get(
+        `https://healthy-plan-api.onrender.com/v1/athlete/${props.id}/body-evaluation`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((response) => {
-        console.log("BODY EVALUATION buscada com sucesso");
         if (response.status === 200 || response.status === 201) {
-          console.log("BODY EVALUATION BUSCADA COM SUCESSO")
-          console.log("response.data.bodyEvaluations ", response.data.bodyEvaluations)
-          // setBodyEvaluation(response.data.bodyEvaluations)
-          // const token = response.data.token;
-          // localStorage.setItem("token", token);
-          // console.log("Token JWT:", token);
+          console.log("BODY EVALUATION buscada com sucesso");
         }
       })
       .catch((error) => {
@@ -521,16 +380,107 @@ export default function Athlete(props) {
       });
   };
 
-  const listAnamnesis = anamnesis.length ? anamnesis.map(anamnesis =>
-    <AnamnesisCard key={anamnesis.id} id={props.id}></AnamnesisCard>
-   ): <p>não há atletas</p>
+  const [graphic, setGraphic] = useState(null);
+
+  const [amountWaterGraphic, setAmountWaterGraphic] = useState(false);
+  const [sisPressGraphic, setSisPressGraphic] = useState(false);
+  const [diasPressGraphic, setDiasPressGraphic] = useState(false);
+
+  const [reloadGraphic, setReloadGraphic] = useState(false);
+
+// to do kalil - fazer a visualização dos body evaluations que já foram criados
+// fazer os gráficos dos atributos numericos do body evaluations
+// fazer a autenticação de login
+
+
+  useEffect(() => {
+    getAnamnesis();
+    const sortedList = anamnesis.sort(
+      (a, b) => new Date(a.createAt) - new Date(b.createAt)
+    );
+    // const createAtList = sortedList.map((item) => item.createdAt);
+    if (amountWaterGraphic) {
+      const amountWaterList = sortedList.map((item) => item.AmountWater);
+      const yTitle = "Quantidade de água em ml"
+      setGraphic(createGraphic("Quantidade de água", amountWaterList, yTitle));
+    } else {
+      if (sisPressGraphic) {
+        const sisPressList = sortedList.map(
+          (item) => item.systolicBloodPressure
+        );
+        const yTitle = "Pressão Sistólica em mmHg"
+        setGraphic(createGraphic("Pressão Sistólica", sisPressList, yTitle));
+      } else if (diasPressGraphic) {
+        const diasPressList = sortedList.map(
+          (item) => item.diastolicBloodPressure
+        );
+        const yTitle = "Pressão Diastólica em mmHg"
+        setGraphic(createGraphic("Pressão Diastólica", diasPressList, yTitle));
+      } else {
+        setGraphic(null);
+      }
+    }
+  }, [amountWaterGraphic, sisPressGraphic, diasPressGraphic, reloadGraphic]);
+
+  const createGraphic = (title, yAxis, yTitle) => {
+    const xAxis = [];
+    console.log("yAxis lenght: ", yAxis.length);
+    console.log("type of yAxis lenght: ", typeof yAxis.length);
+
+    for (let i = 1; i <= yAxis.length; i++) {
+      xAxis.push(i);
+      console.log("xAxis: ", xAxis);
+    }
+
+    return (
+      <>
+        <Plot
+          data={[
+            {
+              x: xAxis,
+              y: yAxis,
+              type: "scatter",
+              mode: "lines+markers",
+              marker: { color: "black" },
+              name: title,
+              line: {
+                color: "#cb6ce6",
+                width: 2,
+              },
+            },
+          ]}
+          layout={{ width: 500, height: 500, title: title,   xaxis: {
+            title: 'Progressão Temporal'
+          },
+          yaxis: {
+            title: yTitle
+          } }}
+        />
+      </>
+    );
+  };
+
+  const listAnamnesis = anamnesis.length ? (
+    anamnesis.map((anamnesis) => (
+      <AnamnesisCard
+        key={anamnesis.id}
+        id={anamnesis.id}
+        AmountWater={anamnesis.AmountWater}
+        diastolicBloodPressure={anamnesis.diastolicBloodPressure}
+        systolicBloodPressure={anamnesis.systolicBloodPressure}
+        createdAt={anamnesis.createdAt}
+      ></AnamnesisCard>
+    ))
+  ) : (
+    <p>Não há nenhuma anamnsis para esse atleta</p>
+  );
 
   return (
     <>
       {userExists && (
         <div className={styles.athleteContainer}>
           <div className={styles.leftButtons}>
-          <button
+            <button
               className={styles.leftButton}
               onClick={() => setAnamnesisModalOpen(true)}
             >
@@ -548,11 +498,11 @@ export default function Athlete(props) {
             <p>{email}</p>
             <ButtonS
               text="Adicionar Anamnesis"
-              OnClickFunction={() => setIsCreateAnamnesisModalOpen(true)}
+              onClick={() => setIsCreateAnamnesisModalOpen(true)}
             ></ButtonS>
             <ButtonS
               text="Adicionar Avaliação Corporal"
-              OnClickFunction={() => setIsCreateBodyEvaluationModalOpen(true)}
+              onClick={() => setIsCreateBodyEvaluationModalOpen(true)}
             ></ButtonS>
           </div>
           <div className={styles.athleteButtons}>
@@ -578,7 +528,7 @@ export default function Athlete(props) {
                 x
               </button>
               <Title title="Criar Anamneses para o atleta"></Title>
-              <form onSubmit={handleCreateAnamnesis}>
+              <form onSubmit={createAnamnesis}>
                 <Input
                   block={true}
                   type="checkbox"
@@ -795,7 +745,7 @@ export default function Athlete(props) {
                 x
               </button>
               <Title title="Criar Avaliação corporal"></Title>
-              <form onSubmit={handleCreateBodyEvaluation}>
+              <form onSubmit={createBodyEvaluation}>
                 <Input
                   block={true}
                   type="number"
@@ -1159,8 +1109,9 @@ export default function Athlete(props) {
               </form>
             </div>
           )}
-          {isAnamnesisModalOpen && <div className={styles.modal}>
-          <button
+          {isAnamnesisModalOpen && (
+            <div className={styles.modal}>
+              <button
                 className={styles.closeButton}
                 onClick={() => {
                   setAnamnesisModalOpen(false);
@@ -1168,8 +1119,39 @@ export default function Athlete(props) {
               >
                 x
               </button>
-            {listAnamnesis}
-          </div>}
+              {listAnamnesis}
+              <br></br>
+              <h3>Visualizar por: </h3>
+              <ButtonS
+                text={"Quantidade de água"}
+                onClick={() => {
+                  setReloadGraphic(!reloadGraphic);
+                  setAmountWaterGraphic(true);
+                  setDiasPressGraphic(false);
+                  setSisPressGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Pressão disatólica"}
+                onClick={() => {
+                  setReloadGraphic(!reloadGraphic);
+                  setAmountWaterGraphic(false);
+                  setDiasPressGraphic(true);
+                  setSisPressGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Pressão sistólica"}
+                onClick={() => {
+                  setReloadGraphic(!reloadGraphic);
+                  setAmountWaterGraphic(false);
+                  setDiasPressGraphic(false);
+                  setSisPressGraphic(true);
+                }}
+              ></ButtonS>
+              {graphic}
+            </div>
+          )}
         </div>
       )}
     </>
