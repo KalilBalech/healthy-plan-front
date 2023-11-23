@@ -4,6 +4,7 @@ import Input from "../Input";
 // import Select from "../Select";
 import Title from "../Title";
 import AnamnesisCard from "../AnamnesisCard";
+import BodyEvaluationCard from "../BodyEvaluationCard";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
@@ -28,19 +29,22 @@ export default function Athlete(props) {
   const [reloadAnamnesis, setReloadAnamnesis] = useState(false);
   const [anamnesis, setAnamnesis] = useState([]);
 
+  const [isBodyEvaluationModalOpen, setBodyEvaluationModalOpen] =
+    useState(false);
+  const [reloadBodyEvaluation, setReloadBodyEvaluation] = useState(false);
+  const [bodyEvaluation, setBodyEvaluation] = useState([]);
+
   useEffect(() => {
     getAnamnesis();
-    console.log(anamnesis);
+    getBodyEvaluations();
+    console.log(bodyEvaluation);
   }, []);
 
   useEffect(() => {
     getAnamnesis();
-    console.log(anamnesis);
-  }, [reloadAnamnesis]);
-
-  // const [isBodyEvaluationModalOpen, setBodyEvaluationModalOpen] = useState(false);
-  // const [reloadBodyEvaluation, setReloadBodyEvaluation] = useState(false);
-  // const [bodyEvaluation, setBodyEvaluation] = useState([]);
+    getBodyEvaluations();
+    console.log(bodyEvaluation);
+  }, [reloadAnamnesis, reloadBodyEvaluation]);
 
   const [name, setName] = useState(props.name);
   const [surname, setSurname] = useState(props.surname);
@@ -357,7 +361,7 @@ export default function Athlete(props) {
         console.error("Erro ao conectar com a API:", error);
       });
   };
-  const getBodyEvaluation = async () => {
+  const getBodyEvaluations = async () => {
     await axios
       .get(
         `https://healthy-plan-api.onrender.com/v1/athlete/${props.id}/body-evaluation`,
@@ -372,6 +376,7 @@ export default function Athlete(props) {
       .then((response) => {
         if (response.status === 200 || response.status === 201) {
           console.log("BODY EVALUATION buscada com sucesso");
+          setBodyEvaluation(response.data.bodyEvaluations);
         }
       })
       .catch((error) => {
@@ -388,10 +393,9 @@ export default function Athlete(props) {
 
   const [reloadGraphic, setReloadGraphic] = useState(false);
 
-// to do kalil - fazer a visualização dos body evaluations que já foram criados
-// fazer os gráficos dos atributos numericos do body evaluations
-// fazer a autenticação de login
-
+  // to do kalil - fazer a visualização dos body evaluations que já foram criados
+  // fazer os gráficos dos atributos numericos do body evaluations
+  // fazer a autenticação de login
 
   useEffect(() => {
     getAnamnesis();
@@ -401,20 +405,20 @@ export default function Athlete(props) {
     // const createAtList = sortedList.map((item) => item.createdAt);
     if (amountWaterGraphic) {
       const amountWaterList = sortedList.map((item) => item.AmountWater);
-      const yTitle = "Quantidade de água em ml"
+      const yTitle = "Quantidade de água em ml";
       setGraphic(createGraphic("Quantidade de água", amountWaterList, yTitle));
     } else {
       if (sisPressGraphic) {
         const sisPressList = sortedList.map(
           (item) => item.systolicBloodPressure
         );
-        const yTitle = "Pressão Sistólica em mmHg"
+        const yTitle = "Pressão Sistólica em mmHg";
         setGraphic(createGraphic("Pressão Sistólica", sisPressList, yTitle));
       } else if (diasPressGraphic) {
         const diasPressList = sortedList.map(
           (item) => item.diastolicBloodPressure
         );
-        const yTitle = "Pressão Diastólica em mmHg"
+        const yTitle = "Pressão Diastólica em mmHg";
         setGraphic(createGraphic("Pressão Diastólica", diasPressList, yTitle));
       } else {
         setGraphic(null);
@@ -449,12 +453,17 @@ export default function Athlete(props) {
               },
             },
           ]}
-          layout={{ width: 500, height: 500, title: title,   xaxis: {
-            title: 'Progressão Temporal'
-          },
-          yaxis: {
-            title: yTitle
-          } }}
+          layout={{
+            width: 500,
+            height: 500,
+            title: title,
+            xaxis: {
+              title: "Progressão Temporal",
+            },
+            yaxis: {
+              title: yTitle,
+            },
+          }}
         />
       </>
     );
@@ -475,6 +484,42 @@ export default function Athlete(props) {
     <p>Não há nenhuma anamnsis para esse atleta</p>
   );
 
+  const listBodyEvaluations = bodyEvaluation.length ? (
+    bodyEvaluation.map((bodyEvaluation) => (
+      <BodyEvaluationCard
+        key={bodyEvaluation.id}
+        id={bodyEvaluation.id}
+        createdAt={bodyEvaluation.createdAt}
+        neck_circ_cm={bodyEvaluation.neck_circ_cm}
+        chest_circ_cm={bodyEvaluation.chest_circ_cm}
+        rightForearm_circ_cm={bodyEvaluation.rightForearm_circ_cm}
+        leftForearm_circ_cm={bodyEvaluation.leftForearm_circ_cm}
+        rightArm_circ_cm={bodyEvaluation.rightArm_circ_cm}
+        leftArm_circ_cm={bodyEvaluation.leftArm_circ_cm}
+        waist_circ_cm={bodyEvaluation.waist_circ_cm}
+        abdomen_circ_cm={bodyEvaluation.abdomen_circ_cm}
+        hip_circ_cm={bodyEvaluation.hip_circ_cm}
+        rightThigh_circ_cm={bodyEvaluation.rightThigh_circ_cm}
+        leftThigh_circ_cm={bodyEvaluation.leftThigh_circ_cm}
+        rightCalf_circ_cm={bodyEvaluation.rightCalf_circ_cm}
+        leftCalf_circ_cm={bodyEvaluation.leftCalf_circ_cm}
+        fatPercentage={bodyEvaluation.fatPercentage}
+        bodyMassIndex={bodyEvaluation.bodyMassIndex}
+        skeletalMass={bodyEvaluation.skeletalMass}
+        bodyAge={bodyEvaluation.bodyAge}
+        basalMetabolicRate={bodyEvaluation.basalMetabolicRate}
+        waistRatioHip={bodyEvaluation.waistRatioHip}
+        ageAtTheMoment={bodyEvaluation.ageAtTheMoment}
+        fatMass_kg={bodyEvaluation.fatMass_kg}
+        leanMass_kg={bodyEvaluation.leanMass_kg}
+        weight_cm={bodyEvaluation.weight_cm}
+        height_kg={bodyEvaluation.height_kg}
+      ></BodyEvaluationCard>
+    ))
+  ) : (
+    <p>Não há nenhuma anamnsis para esse atleta</p>
+  );
+
   return (
     <>
       {userExists && (
@@ -488,7 +533,7 @@ export default function Athlete(props) {
             </button>
             <button
               className={styles.leftButton}
-              onClick={() => getBodyEvaluation()}
+              onClick={() => setBodyEvaluationModalOpen(true)}
             >
               Visuzalizar avaliações corporais
             </button>
@@ -1120,6 +1165,49 @@ export default function Athlete(props) {
                 x
               </button>
               {listAnamnesis}
+              <br></br>
+              <h3>Visualizar por: </h3>
+              <ButtonS
+                text={"Quantidade de água"}
+                onClick={() => {
+                  setReloadGraphic(!reloadGraphic);
+                  setAmountWaterGraphic(true);
+                  setDiasPressGraphic(false);
+                  setSisPressGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Pressão disatólica"}
+                onClick={() => {
+                  setReloadGraphic(!reloadGraphic);
+                  setAmountWaterGraphic(false);
+                  setDiasPressGraphic(true);
+                  setSisPressGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Pressão sistólica"}
+                onClick={() => {
+                  setReloadGraphic(!reloadGraphic);
+                  setAmountWaterGraphic(false);
+                  setDiasPressGraphic(false);
+                  setSisPressGraphic(true);
+                }}
+              ></ButtonS>
+              {graphic}
+            </div>
+          )}
+          {isBodyEvaluationModalOpen && (
+            <div className={styles.modal}>
+              <button
+                className={styles.closeButton}
+                onClick={() => {
+                  setBodyEvaluationModalOpen(false);
+                }}
+              >
+                x
+              </button>
+              {listBodyEvaluations}
               <br></br>
               <h3>Visualizar por: </h3>
               <ButtonS
