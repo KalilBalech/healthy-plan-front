@@ -5,8 +5,16 @@ import Title from "./Title";
 import Footer from "./Footer";
 import HeaderMainButton from "./Header/HeaderMainButton";
 import HomeDiv from "./HomeDiv";
+import { useEffect } from 'react';
 
 export default function Home() {
+
+  useEffect(() => {
+    localStorage.clear()
+    console.log("oeeoeoeo")
+    console.log(import.meta.env.VITE_HTTPS);
+  }, [])
+
   return (
     <div id="homePage">
       <Header>

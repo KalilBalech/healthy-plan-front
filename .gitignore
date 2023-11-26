@@ -26,3 +26,6 @@ dist-ssr
 # google auth secrets
 
 *.txt
+
+# environment variables
+*.env

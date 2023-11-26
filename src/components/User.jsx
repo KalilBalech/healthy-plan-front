@@ -38,8 +38,10 @@ export default function User() {
     const personalID = localStorage.getItem('personalID');
     const token = localStorage.getItem('token');
     // console.log('SEX INICIAL: ' + sex + ' do tipo: ' + typeof sex);
-  
-    axios.get(`https://healthy-plan-api.onrender.com/v1/trainer/${personalID}`, {
+
+    if(personalID){
+      console.log("ENTROU NO IF")
+      axios.get(`https://healthy-plan-api.onrender.com/v1/trainer/${personalID}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -54,6 +56,13 @@ export default function User() {
     .catch((error) => {
       console.error('Erro ao buscar dados:', error);
     });
+  }
+  else{
+    console.log("ENTROU NO ELSE")
+
+    setPersonalName(localStorage.getItem('name'))
+    setPersonalEmail(localStorage.getItem('email'))
+  }
     
   }, []);
 

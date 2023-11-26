@@ -9,12 +9,30 @@ import Header from './Header';
 import Title from './Title';
 import HeaderMainButton from './Header/HeaderMainButton';
 
+import { GoogleLogin } from 'react-google-login'
+
+const clientID = '286710715940-2qc3719l95ng30ge767vasm4qrt6e7bp.apps.googleusercontent.com'
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
 
   const navigate = useNavigate();
+
+  const onSuccess = (res)=>{
+    alert("Logado com sucesso, utlizando o auth do google. Current user: ", res.profileObj)
+    console.log("Logado com sucesso, utlizando o auth do google. Current user: ", res.profileObj)
+    localStorage.setItem('name', res.profileObj.name)
+    localStorage.setItem('email', res.profileObj.email)
+    localStorage.setItem('googlePersonalID', res.profileObj.googleID)
+    // Use history.push para redirecionar o usuário
+    navigate('/user');
+  }
+
+  const onFailure = (res)=>{
+    alert("Ocorreu um erro no login com o auth do google. Current user: ", res)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,6 +103,16 @@ export default function Login() {
         <p>{responseMessage}</p>
         <Button text="Entrar" />
       </form>
+      <div id='signInButton'>
+        <GoogleLogin
+          clientId={clientID}
+          buttonText='Login'
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          cookiePolicy={'single_host_origin'}
+          isSignedIn={true}
+        />
+      </div>
     </div>
   );
 }

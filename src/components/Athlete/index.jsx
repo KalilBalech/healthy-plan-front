@@ -877,7 +877,7 @@ export default function Athlete(props) {
       ></BodyEvaluationCard>
     ))
   ) : (
-    <p>Não há nenhuma anamnsis para esse atleta</p>
+    <p>Não há nenhuma avaliação corporal para esse atleta</p>
   );
 
   return (
