@@ -42,9 +42,12 @@ export default function Athlete(props) {
 
   useEffect(() => {
     getAnamnesis();
+  }, [reloadAnamnesis]);
+
+  useEffect(() => {
     getBodyEvaluations();
-    console.log(bodyEvaluation);
-  }, [reloadAnamnesis, reloadBodyEvaluation]);
+    setBodyEvaluationModalOpen(false);
+  }, [reloadBodyEvaluation]);
 
   const [name, setName] = useState(props.name);
   const [surname, setSurname] = useState(props.surname);
@@ -88,6 +91,8 @@ export default function Athlete(props) {
   const [UseHealthDevice, setUseHealthDevice] = useState("");
   const [additionalObservations, setAdditionalObservations] = useState("");
   const [userExists, setUserExists] = useState(true);
+
+  const [bodyEvaluationGraphic, setBodyEvaluationGraphic] = useState(null);
 
   const [ageAtTheMoment, setageAtTheMoment] = useState(null);
   const [fatMass_kg, setfatMass_kg] = useState(null);
@@ -243,35 +248,37 @@ export default function Athlete(props) {
         }
       )
       .then((response) => {
-        setageAtTheMoment(null);
-        setfatMass_kg(null);
-        setleanMass_kg(null);
-        setweight_cm(null);
-        setheight_kg(null);
+        setageAtTheMoment("");
+        setfatMass_kg("");
+        setleanMass_kg("");
+        setweight_cm("");
+        setheight_kg("");
         setbodyMassClass("");
-        setbodyMassIndex(null);
-        setskeletalMass(null);
-        setbodyAge(null);
-        setbasalMetabolicRate(null);
-        setwaistRatioHip(null);
+        setbodyMassIndex("");
+        setskeletalMass("");
+        setbodyAge("");
+        setbasalMetabolicRate("");
+        setwaistRatioHip("");
         setvisceralFat("");
-        setneck_circ_cm(null);
-        setchest_circ_cm(null);
-        setrightForearm_circ_cm(null);
-        setleftForearm_circ_cm(null);
-        setrightArm_circ_cm(null);
-        setleftArm_circ_cm(null);
-        setwaist_circ_cm(null);
-        setabdomen_circ_cm(null);
-        sethip_circ_cm(null);
-        setrightThigh_circ_cm(null);
-        setleftThigh_circ_cm(null);
-        setrightCalf_circ_cm(null);
-        setleftCalf_circ_cm(null);
-        setfatPercentage(null);
+        setneck_circ_cm("");
+        setchest_circ_cm("");
+        setrightForearm_circ_cm("");
+        setleftForearm_circ_cm("");
+        setrightArm_circ_cm("");
+        setleftArm_circ_cm("");
+        setwaist_circ_cm("");
+        setabdomen_circ_cm("");
+        sethip_circ_cm("");
+        setrightThigh_circ_cm("");
+        setleftThigh_circ_cm("");
+        setrightCalf_circ_cm("");
+        setleftCalf_circ_cm("");
+        setfatPercentage("");
 
         if (response.status === 200 || response.status === 201) {
-          console.log("BODY EVALUATION CRIADA COM SUCESSO");
+          alert("BODY EVALUATION CRIADA COM SUCESSO");
+          setReloadBodyEvaluation(!reloadBodyEvaluation);
+          setBodyEvaluationModalOpen(false);
         }
       })
       .catch((error) => {
@@ -391,11 +398,42 @@ export default function Athlete(props) {
   const [sisPressGraphic, setSisPressGraphic] = useState(false);
   const [diasPressGraphic, setDiasPressGraphic] = useState(false);
 
+  const [chestCircCmGraphic, setChestCircCmGraphic] = useState(false);
+  const [rightForearmCircCmGraphic, setRightForearmCircCmGraphic] =
+    useState(false);
+  const [leftForearmCircCmGraphic, setLeftForearmCircCmGraphic] =
+    useState(false);
+  const [rightArmCircCmGraphic, setRightArmCircCmGraphic] = useState(false);
+  const [leftArmCircCmGraphic, setLeftArmCircCmGraphic] = useState(false);
+  const [waistCircCmGraphic, setWaistCircCmGraphic] = useState(false);
+  const [abdomenCircCmGraphic, setAbdomenCircCmGraphic] = useState(false);
+  const [hipCircCmGraphic, setHipCircCmGraphic] = useState(false);
+  const [rightThighCircCmGraphic, setRightThighCircCmGraphic] = useState(false);
+  const [leftThighCircCmGraphic, setLeftThighCircCmGraphic] = useState(false);
+  const [rightCalfCircCmGraphic, setRightCalfCircCmGraphic] = useState(false);
+  const [leftCalfCircCmGraphic, setLeftCalfCircCmGraphic] = useState(false);
+  const [fatPercentageGraphic, setFatPercentageGraphic] = useState(false);
+  const [bodyMassIndexGraphic, setBodyMassIndexGraphic] = useState(false);
+  const [skeletalMassGraphic, setSkeletalMassGraphic] = useState(false);
+  const [bodyAgeGraphic, setBodyAgeGraphic] = useState(false);
+  const [basalMetabolicRateGraphic, setBasalMetabolicRateGraphic] =
+    useState(false);
+  const [waistRatioHipGraphic, setWaistRatioHipGraphic] = useState(false);
+  const [ageAtTheMomentGraphic, setAgeAtTheMomentGraphic] = useState(false);
+  const [fatMassKgGraphic, setFatMassKgGraphic] = useState(false);
+  const [leanMassKgGraphic, setLeanMassKgGraphic] = useState(false);
+  const [weightCmGraphic, setWeightCmGraphic] = useState(false);
+  const [heightKgGraphic, setHeightKgGraphic] = useState(false);
+  const [neckCircCmGraphic, setNeckCircCmGraphic] = useState(false);
+
   const [reloadGraphic, setReloadGraphic] = useState(false);
 
-  // to do kalil - fazer a visualização dos body evaluations que já foram criados
-  // fazer os gráficos dos atributos numericos do body evaluations
-  // fazer a autenticação de login
+  const [reloadBodyEvaluationGraphic, setReloadBodyEvaluationGraphic] =
+    useState(false);
+
+  // to do kalil - fazer a visualização dos body evaluations que já foram criados - done
+  // to do kalil - fazer os gráficos dos atributos numericos do body evaluations - done
+  // to do kalil - fazer a autenticação de login
 
   useEffect(() => {
     getAnamnesis();
@@ -427,6 +465,328 @@ export default function Athlete(props) {
   }, [amountWaterGraphic, sisPressGraphic, diasPressGraphic, reloadGraphic]);
 
   const createGraphic = (title, yAxis, yTitle) => {
+    const xAxis = [];
+    console.log("yAxis lenght: ", yAxis.length);
+    console.log("type of yAxis lenght: ", typeof yAxis.length);
+
+    for (let i = 1; i <= yAxis.length; i++) {
+      xAxis.push(i);
+      console.log("xAxis: ", xAxis);
+    }
+
+    return (
+      <>
+        <Plot
+          data={[
+            {
+              x: xAxis,
+              y: yAxis,
+              type: "scatter",
+              mode: "lines+markers",
+              marker: { color: "black" },
+              name: title,
+              line: {
+                color: "#cb6ce6",
+                width: 2,
+              },
+            },
+          ]}
+          layout={{
+            width: 500,
+            height: 500,
+            title: title,
+            xaxis: {
+              title: "Progressão Temporal",
+            },
+            yaxis: {
+              title: yTitle,
+            },
+          }}
+        />
+      </>
+    );
+  };
+
+  useEffect(() => {
+    getBodyEvaluations();
+    const sortedList = bodyEvaluation.sort(
+      (a, b) => new Date(a.createAt) - new Date(b.createAt)
+    );
+    // const createAtList = sortedList.map((item) => item.createdAt);
+    if (chestCircCmGraphic) {
+      const chestCircCmList = sortedList.map((item) => item.chest_circ_cm);
+      const yTitle = "Circunferência do peitoral em cm";
+      setBodyEvaluationGraphic(
+        createBodyEvaluationGraphic(
+          "Circunferência do peitoral",
+          chestCircCmList,
+          yTitle
+        )
+      );
+    } else if (rightForearmCircCmGraphic) {
+        const rightForearmCircCmList = sortedList.map(
+          (item) => item.rightForearm_circ_cm
+        );
+        const yTitle = "Circunferência do antebraço direito em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do antebraço direito",
+            rightForearmCircCmList,
+            yTitle
+          )
+        );
+      } else if (leftForearmCircCmGraphic) {
+        const leftForearmCircCmList = sortedList.map(
+          (item) => item.leftForearm_circ_cm
+        );
+        const yTitle = "Circunferência do antebraço esquerdo em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do antebraço esquerdo",
+            leftForearmCircCmList,
+            yTitle
+          )
+        );
+      } else if (rightArmCircCmGraphic) {
+        const rightArmCircCmList = sortedList.map(
+          (item) => item.rightArm_circ_cm
+        );
+        const yTitle = "Circunferência do braço direito em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do braço direito",
+            rightArmCircCmList,
+            yTitle
+          )
+        );
+      } else if (leftArmCircCmGraphic) {
+        const leftArmCircCmList = sortedList.map(
+          (item) => item.leftArm_circ_cm
+        );
+        const yTitle = "Circunferência do braço esquerdo em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do braço esquerdo",
+            leftArmCircCmList,
+            yTitle
+          )
+        );
+      } else if (waistCircCmGraphic) {
+        const waistCircCmList = sortedList.map((item) => item.waist_circ_cm);
+        const yTitle = "Circunferência da cintura em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência da cintura",
+            waistCircCmList,
+            yTitle
+          )
+        );
+      } else if (abdomenCircCmGraphic) {
+        const abdomenCircCmList = sortedList.map(
+          (item) => item.abdomen_circ_cm
+        );
+        const yTitle = "Circunferência do abdômen em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do abdômen",
+            abdomenCircCmList,
+            yTitle
+          )
+        );
+      } else if (hipCircCmGraphic) {
+        const hipCircCmList = sortedList.map((item) => item.hip_circ_cm);
+        const yTitle = "Circunferência do quadril em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do quadril",
+            hipCircCmList,
+            yTitle
+          )
+        );
+      } else if (rightThighCircCmGraphic) {
+        const rightThighCircCmList = sortedList.map(
+          (item) => item.rightThigh_circ_cm
+        );
+        const yTitle = "Circunferência da coxa direita em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência da coxa direita",
+            rightThighCircCmList,
+            yTitle
+          )
+        );
+      } else if (leftThighCircCmGraphic) {
+        const leftThighCircCmList = sortedList.map(
+          (item) => item.leftThigh_circ_cm
+        );
+        const yTitle = "Circunferência da coxa esquerda em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência da coxa esquerda",
+            leftThighCircCmList,
+            yTitle
+          )
+        );
+      } else if (rightCalfCircCmGraphic) {
+        const rightCalfCircCmList = sortedList.map(
+          (item) => item.rightCalf_circ_cm
+        );
+        const yTitle = "Circunferência da panturrilha direita em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência da panturrilha direita",
+            rightCalfCircCmList,
+            yTitle
+          )
+        );
+      } else if (leftCalfCircCmGraphic) {
+        const leftCalfCircCmList = sortedList.map(
+          (item) => item.leftCalf_circ_cm
+        );
+        const yTitle = "Circunferência da panturrilha esquerda em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência da panturrilha esquerda",
+            leftCalfCircCmList,
+            yTitle
+          )
+        );
+      } else if (fatPercentageGraphic) {
+        const fatPercentageList = sortedList.map((item) => item.fatPercentage);
+        const yTitle = "Percentual de gordura";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Percentual de gordura",
+            fatPercentageList,
+            yTitle
+          )
+        );
+      } else if (bodyMassIndexGraphic) {
+        const bodyMassIndexList = sortedList.map((item) => item.bodyMassIndex);
+        const yTitle = "Índice de Massa Corporal (IMC)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Índice de Massa Corporal",
+            bodyMassIndexList,
+            yTitle
+          )
+        );
+      } else if (skeletalMassGraphic) {
+        const skeletalMassList = sortedList.map((item) => item.skeletalMass);
+        const yTitle = "Massa Esquelética (kg)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Massa Esquelética",
+            skeletalMassList,
+            yTitle
+          )
+        );
+      } else if (bodyAgeGraphic) {
+        const bodyAgeList = sortedList.map((item) => item.bodyAge);
+        const yTitle = "Idade Corporal (anos)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic("Idade Corporal", bodyAgeList, yTitle)
+        );
+      } else if (basalMetabolicRateGraphic) {
+        const basalMetabolicRateList = sortedList.map(
+          (item) => item.basalMetabolicRate
+        );
+        const yTitle = "Taxa Metabólica Basal (kcal/dia)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Taxa Metabólica Basal",
+            basalMetabolicRateList,
+            yTitle
+          )
+        );
+      } else if (waistRatioHipGraphic) {
+        const waistRatioHipList = sortedList.map((item) => item.waistRatioHip);
+        const yTitle = "Relação Cintura/Quadril";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Relação Cintura/Quadril",
+            waistRatioHipList,
+            yTitle
+          )
+        );
+      } else if (ageAtTheMomentGraphic) {
+        const ageAtTheMomentList = sortedList.map(
+          (item) => item.ageAtTheMoment
+        );
+        const yTitle = "Idade no Momento (anos)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Idade no Momento",
+            ageAtTheMomentList,
+            yTitle
+          )
+        );
+      } else if (fatMassKgGraphic) {
+        const fatMassKgList = sortedList.map((item) => item.fatMass_kg);
+        const yTitle = "Massa de Gordura (kg)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic("Massa de Gordura", fatMassKgList, yTitle)
+        );
+      } else if (leanMassKgGraphic) {
+        const leanMassKgList = sortedList.map((item) => item.leanMass_kg);
+        const yTitle = "Massa Magra (kg)";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic("Massa Magra", leanMassKgList, yTitle)
+        );
+      } else if (weightCmGraphic) {
+        const weightCmList = sortedList.map((item) => item.weight_cm);
+        const yTitle = "Peso (cm)"; // Verifique se a unidade está correta
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic("Peso", weightCmList, yTitle)
+        );
+      } else if (heightKgGraphic) {
+        const heightKgList = sortedList.map((item) => item.height_kg);
+        const yTitle = "Altura (kg)"; // Verifique se a unidade está correta
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic("Altura", heightKgList, yTitle)
+        );
+      } else if (neckCircCmGraphic) {
+        const neckCircCmList = sortedList.map((item) => item.neck_circ_cm);
+        const yTitle = "Circunferência do Pescoço em cm";
+        setBodyEvaluationGraphic(
+          createBodyEvaluationGraphic(
+            "Circunferência do Pescoço",
+            neckCircCmList,
+            yTitle
+          )
+        );
+      } else {
+        setBodyEvaluationGraphic(null);
+      }
+    }, [
+    chestCircCmGraphic,
+    rightForearmCircCmGraphic,
+    leftForearmCircCmGraphic,
+    rightArmCircCmGraphic,
+    leftArmCircCmGraphic,
+    waistCircCmGraphic,
+    abdomenCircCmGraphic,
+    hipCircCmGraphic,
+    rightThighCircCmGraphic,
+    leftThighCircCmGraphic,
+    rightCalfCircCmGraphic,
+    leftCalfCircCmGraphic,
+    fatPercentageGraphic,
+    bodyMassIndexGraphic,
+    skeletalMassGraphic,
+    bodyAgeGraphic,
+    basalMetabolicRateGraphic,
+    waistRatioHipGraphic,
+    ageAtTheMomentGraphic,
+    fatMassKgGraphic,
+    leanMassKgGraphic,
+    weightCmGraphic,
+    heightKgGraphic,
+    neckCircCmGraphic,
+    reloadBodyEvaluationGraphic,
+  ]);
+
+  const createBodyEvaluationGraphic = (title, yAxis, yTitle) => {
     const xAxis = [];
     console.log("yAxis lenght: ", yAxis.length);
     console.log("type of yAxis lenght: ", typeof yAxis.length);
@@ -1211,33 +1571,750 @@ export default function Athlete(props) {
               <br></br>
               <h3>Visualizar por: </h3>
               <ButtonS
-                text={"Quantidade de água"}
+                text={"Circunferência do pescoço"}
                 onClick={() => {
-                  setReloadGraphic(!reloadGraphic);
-                  setAmountWaterGraphic(true);
-                  setDiasPressGraphic(false);
-                  setSisPressGraphic(false);
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(true);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
                 }}
               ></ButtonS>
               <ButtonS
-                text={"Pressão disatólica"}
+                text={"Circunferência do Antebraço Direito"}
                 onClick={() => {
-                  setReloadGraphic(!reloadGraphic);
-                  setAmountWaterGraphic(false);
-                  setDiasPressGraphic(true);
-                  setSisPressGraphic(false);
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(true);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
                 }}
               ></ButtonS>
               <ButtonS
-                text={"Pressão sistólica"}
+                text={"Circunferência do Antebraço Esquerdo"}
                 onClick={() => {
-                  setReloadGraphic(!reloadGraphic);
-                  setAmountWaterGraphic(false);
-                  setDiasPressGraphic(false);
-                  setSisPressGraphic(true);
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(true);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
                 }}
               ></ButtonS>
-              {graphic}
+              <ButtonS
+                text={"Circunferência do Braço Direito"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(true);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência do Braço Esquerdo"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(true);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência da Cintura"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(true);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência do Abdômen"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(true);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência do Quadril"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(true);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência da Coxa Direita"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(true);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência da Coxa Esquerda"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(true);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência da Panturrilha Direita"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(true);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência da Panturrilha Esquerda"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(true);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Percentual de Gordura"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(true);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={" Índice de Massa Corporal (IMC)"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(true);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Massa Esquelética"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(true);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Idade Corporal"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(true);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Taxa Metabólica Basal"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(true);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Relação Cintura/Quadril"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(true);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Idade no Momento"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(true);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Massa de Gordura (kg)"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(true);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Massa Magra (kg)"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(true);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Peso (em kg)"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(true);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Altura (em cm)"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(true);
+                  setNeckCircCmGraphic(false);
+                }}
+              ></ButtonS>
+              <ButtonS
+                text={"Circunferência do Pescoço"}
+                onClick={() => {
+                  setReloadBodyEvaluationGraphic(!reloadBodyEvaluationGraphic);
+
+                  setChestCircCmGraphic(false);
+                  setRightForearmCircCmGraphic(false);
+                  setLeftForearmCircCmGraphic(false);
+                  setRightArmCircCmGraphic(false);
+                  setLeftArmCircCmGraphic(false);
+                  setWaistCircCmGraphic(false);
+                  setAbdomenCircCmGraphic(false);
+                  setHipCircCmGraphic(false);
+                  setRightThighCircCmGraphic(false);
+                  setLeftThighCircCmGraphic(false);
+                  setRightCalfCircCmGraphic(false);
+                  setLeftCalfCircCmGraphic(false);
+                  setFatPercentageGraphic(false);
+                  setBodyMassIndexGraphic(false);
+                  setSkeletalMassGraphic(false);
+                  setBodyAgeGraphic(false);
+                  setBasalMetabolicRateGraphic(false);
+                  setWaistRatioHipGraphic(false);
+                  setAgeAtTheMomentGraphic(false);
+                  setFatMassKgGraphic(false);
+                  setLeanMassKgGraphic(false);
+                  setWeightCmGraphic(false);
+                  setHeightKgGraphic(false);
+                  setNeckCircCmGraphic(true);
+                }}
+              ></ButtonS>
+              {bodyEvaluationGraphic}
             </div>
           )}
         </div>
