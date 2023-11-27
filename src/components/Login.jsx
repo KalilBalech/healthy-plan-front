@@ -18,6 +18,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
 
+  const[googleLogin, setGoogleLogin] = useState(false)
+
   const navigate = useNavigate();
 
   const onSuccess = (res)=>{
@@ -103,8 +105,9 @@ export default function Login() {
         <p>{responseMessage}</p>
         <Button text="Entrar" />
       </form>
-      <div id='signInButton'>
-        <GoogleLogin
+      <div id='signInButton' onClick={()=>{setGoogleLogin(true)}}>
+        <button>Fazer login com o Google</button>
+        {googleLogin &&<GoogleLogin
           clientId={clientID}
           buttonText='Login'
           onSuccess={onSuccess}
@@ -112,6 +115,7 @@ export default function Login() {
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
         />
+        }
       </div>
     </div>
   );
