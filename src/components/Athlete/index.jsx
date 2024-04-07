@@ -8,10 +8,13 @@ import BodyEvaluationCard from "../BodyEvaluationCard";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import CreateGraphic from "../createGraphic/createGraphic";
 
 import axios from "axios";
 
 import Plot from "react-plotly.js";
+// import { jsPDF } from 'jspdf';
+// import Plotly from 'plotly.js-dist-min';
 
 export default function Athlete(props) {
   const id = props.id;
@@ -416,8 +419,7 @@ export default function Athlete(props) {
   const [bodyMassIndexGraphic, setBodyMassIndexGraphic] = useState(false);
   const [skeletalMassGraphic, setSkeletalMassGraphic] = useState(false);
   const [bodyAgeGraphic, setBodyAgeGraphic] = useState(false);
-  const [basalMetabolicRateGraphic, setBasalMetabolicRateGraphic] =
-    useState(false);
+  const [basalMetabolicRateGraphic, setBasalMetabolicRateGraphic] = useState(false);
   const [waistRatioHipGraphic, setWaistRatioHipGraphic] = useState(false);
   const [ageAtTheMomentGraphic, setAgeAtTheMomentGraphic] = useState(false);
   const [fatMassKgGraphic, setFatMassKgGraphic] = useState(false);
@@ -428,12 +430,11 @@ export default function Athlete(props) {
 
   const [reloadGraphic, setReloadGraphic] = useState(false);
 
-  const [reloadBodyEvaluationGraphic, setReloadBodyEvaluationGraphic] =
-    useState(false);
+  const [reloadBodyEvaluationGraphic, setReloadBodyEvaluationGraphic] = useState(false);
 
-  // to do kalil - fazer a visualização dos body evaluations que já foram criados - done
-  // to do kalil - fazer os gráficos dos atributos numericos do body evaluations - done
-  // to do kalil - fazer a autenticação de login
+  const [graphicTitle, setGraphicTitle] = useState("");
+  const [graphicData, setGraphicData] = useState([]);
+  const [graphicYTitle, setGraphicYTitle] = useState("");
 
   useEffect(() => {
     getAnamnesis();
@@ -443,70 +444,34 @@ export default function Athlete(props) {
     // const createAtList = sortedList.map((item) => item.createdAt);
     if (amountWaterGraphic) {
       const amountWaterList = sortedList.map((item) => item.AmountWater);
-      const yTitle = "Quantidade de água em ml";
-      setGraphic(createGraphic("Quantidade de água", amountWaterList, yTitle));
+      // setGraphic(CreateGraphic("Quantidade de água", amountWaterList, yTitle));
+      setGraphicTitle("Quantidade de água")
+      setGraphicData(amountWaterList)
+      setGraphicYTitle("Quantidade de água em ml")
     } else {
       if (sisPressGraphic) {
         const sisPressList = sortedList.map(
           (item) => item.systolicBloodPressure
         );
-        const yTitle = "Pressão Sistólica em mmHg";
-        setGraphic(createGraphic("Pressão Sistólica", sisPressList, yTitle));
+        setGraphicTitle("Pressão Sistólica")
+        setGraphicData(sisPressList)
+        setGraphicYTitle("Pressão Sistólica em mmHg")
       } else if (diasPressGraphic) {
         const diasPressList = sortedList.map(
           (item) => item.diastolicBloodPressure
         );
-        const yTitle = "Pressão Diastólica em mmHg";
-        setGraphic(createGraphic("Pressão Diastólica", diasPressList, yTitle));
+        setGraphicTitle("Pressão Diastólica")
+        setGraphicData(diasPressList)
+        setGraphicYTitle("Pressão Diastólica em mmHg")
       } else {
-        setGraphic(null);
+        setGraphicTitle("")
+        setGraphicData([])
+        setGraphicYTitle("")
       }
     }
   }, [amountWaterGraphic, sisPressGraphic, diasPressGraphic, reloadGraphic]);
 
-  const createGraphic = (title, yAxis, yTitle) => {
-    const xAxis = [];
-    console.log("yAxis lenght: ", yAxis.length);
-    console.log("type of yAxis lenght: ", typeof yAxis.length);
-
-    for (let i = 1; i <= yAxis.length; i++) {
-      xAxis.push(i);
-      console.log("xAxis: ", xAxis);
-    }
-
-    return (
-      <>
-        <Plot
-          data={[
-            {
-              x: xAxis,
-              y: yAxis,
-              type: "scatter",
-              mode: "lines+markers",
-              marker: { color: "black" },
-              name: title,
-              line: {
-                color: "#cb6ce6",
-                width: 2,
-              },
-            },
-          ]}
-          layout={{
-            width: 500,
-            height: 500,
-            title: title,
-            xaxis: {
-              title: "Progressão Temporal",
-            },
-            yaxis: {
-              title: yTitle,
-            },
-          }}
-        />
-      </>
-    );
-  };
-
+  // CRIA OS GRÁFICOS DOS BODY EVALUATION
   useEffect(() => {
     getBodyEvaluations();
     const sortedList = bodyEvaluation.sort(
@@ -515,248 +480,150 @@ export default function Athlete(props) {
     // const createAtList = sortedList.map((item) => item.createdAt);
     if (chestCircCmGraphic) {
       const chestCircCmList = sortedList.map((item) => item.chest_circ_cm);
-      const yTitle = "Circunferência do peitoral em cm";
-      setBodyEvaluationGraphic(
-        createBodyEvaluationGraphic(
-          "Circunferência do peitoral",
-          chestCircCmList,
-          yTitle
-        )
-      );
+      setGraphicTitle("Circunferência do peitoral")
+      setGraphicData(chestCircCmList)
+      setGraphicYTitle("Circunferência do peitoral em cm")
     } else if (rightForearmCircCmGraphic) {
         const rightForearmCircCmList = sortedList.map(
           (item) => item.rightForearm_circ_cm
         );
-        const yTitle = "Circunferência do antebraço direito em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do antebraço direito",
-            rightForearmCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do antebraço direito")
+        setGraphicData(rightForearmCircCmList)
+        setGraphicYTitle("Circunferência do antebraço direito em cm")
       } else if (leftForearmCircCmGraphic) {
         const leftForearmCircCmList = sortedList.map(
           (item) => item.leftForearm_circ_cm
         );
-        const yTitle = "Circunferência do antebraço esquerdo em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do antebraço esquerdo",
-            leftForearmCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do antebraço esquerdo")
+        setGraphicData(leftForearmCircCmList)
+        setGraphicYTitle("Circunferência do antebraço esquerdo em cm")
       } else if (rightArmCircCmGraphic) {
         const rightArmCircCmList = sortedList.map(
           (item) => item.rightArm_circ_cm
         );
-        const yTitle = "Circunferência do braço direito em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do braço direito",
-            rightArmCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do braço direito")
+        setGraphicData(rightArmCircCmList)
+        setGraphicYTitle("Circunferência do braço direito em cm")
       } else if (leftArmCircCmGraphic) {
         const leftArmCircCmList = sortedList.map(
           (item) => item.leftArm_circ_cm
         );
-        const yTitle = "Circunferência do braço esquerdo em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do braço esquerdo",
-            leftArmCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do braço esquerdo")
+        setGraphicData(leftArmCircCmList)
+        setGraphicYTitle("Circunferência do braço esquerdo em cm")
       } else if (waistCircCmGraphic) {
         const waistCircCmList = sortedList.map((item) => item.waist_circ_cm);
-        const yTitle = "Circunferência da cintura em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência da cintura",
-            waistCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência da cintura")
+        setGraphicData(waistCircCmList)
+        setGraphicYTitle("Circunferência da cintura em cm")
       } else if (abdomenCircCmGraphic) {
         const abdomenCircCmList = sortedList.map(
           (item) => item.abdomen_circ_cm
         );
-        const yTitle = "Circunferência do abdômen em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do abdômen",
-            abdomenCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do abdômen")
+        setGraphicData(abdomenCircCmList)
+        setGraphicYTitle("Circunferência do abdômen em cm")
       } else if (hipCircCmGraphic) {
         const hipCircCmList = sortedList.map((item) => item.hip_circ_cm);
-        const yTitle = "Circunferência do quadril em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do quadril",
-            hipCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do quadril")
+        setGraphicData(hipCircCmList)
+        setGraphicYTitle("Circunferência do quadril em cm")
       } else if (rightThighCircCmGraphic) {
         const rightThighCircCmList = sortedList.map(
           (item) => item.rightThigh_circ_cm
         );
-        const yTitle = "Circunferência da coxa direita em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência da coxa direita",
-            rightThighCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência da coxa direita")
+        setGraphicData(rightThighCircCmList)
+        setGraphicYTitle("Circunferência da coxa direita em cm")
       } else if (leftThighCircCmGraphic) {
         const leftThighCircCmList = sortedList.map(
           (item) => item.leftThigh_circ_cm
         );
-        const yTitle = "Circunferência da coxa esquerda em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência da coxa esquerda",
-            leftThighCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência da coxa esquerda")
+        setGraphicData(leftThighCircCmList)
+        setGraphicYTitle("Circunferência da coxa esquerda em cm")
       } else if (rightCalfCircCmGraphic) {
         const rightCalfCircCmList = sortedList.map(
           (item) => item.rightCalf_circ_cm
         );
-        const yTitle = "Circunferência da panturrilha direita em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência da panturrilha direita",
-            rightCalfCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência da panturrilha direita")
+        setGraphicData(rightCalfCircCmList)
+        setGraphicYTitle("Circunferência da panturrilha direita em cm")
       } else if (leftCalfCircCmGraphic) {
         const leftCalfCircCmList = sortedList.map(
           (item) => item.leftCalf_circ_cm
         );
-        const yTitle = "Circunferência da panturrilha esquerda em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência da panturrilha esquerda",
-            leftCalfCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência da panturrilha esquerda")
+        setGraphicData(leftCalfCircCmList)
+        setGraphicYTitle("Circunferência da panturrilha esquerda em cm")
       } else if (fatPercentageGraphic) {
         const fatPercentageList = sortedList.map((item) => item.fatPercentage);
-        const yTitle = "Percentual de gordura";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Percentual de gordura",
-            fatPercentageList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Percentual de gordura")
+        setGraphicData(fatPercentageList)
+        setGraphicYTitle("Percentual de gordura")
       } else if (bodyMassIndexGraphic) {
         const bodyMassIndexList = sortedList.map((item) => item.bodyMassIndex);
-        const yTitle = "Índice de Massa Corporal (IMC)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Índice de Massa Corporal",
-            bodyMassIndexList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Índice de Massa Corporal")
+        setGraphicData(bodyMassIndexList)
+        setGraphicYTitle("Índice de Massa Corporal (IMC)")
       } else if (skeletalMassGraphic) {
         const skeletalMassList = sortedList.map((item) => item.skeletalMass);
-        const yTitle = "Massa Esquelética (kg)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Massa Esquelética",
-            skeletalMassList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Massa Esquelética")
+        setGraphicData(skeletalMassList)
+        setGraphicYTitle("Massa Esquelética (kg)")
       } else if (bodyAgeGraphic) {
         const bodyAgeList = sortedList.map((item) => item.bodyAge);
-        const yTitle = "Idade Corporal (anos)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic("Idade Corporal", bodyAgeList, yTitle)
-        );
+        setGraphicTitle("Idade Corporal")
+        setGraphicData(bodyAgeList)
+        setGraphicYTitle("Idade Corporal (anos)")
       } else if (basalMetabolicRateGraphic) {
         const basalMetabolicRateList = sortedList.map(
           (item) => item.basalMetabolicRate
         );
-        const yTitle = "Taxa Metabólica Basal (kcal/dia)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Taxa Metabólica Basal",
-            basalMetabolicRateList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Taxa Metabólica Basal")
+        setGraphicData(basalMetabolicRateList)
+        setGraphicYTitle("Taxa Metabólica Basal (kcal/dia)")
       } else if (waistRatioHipGraphic) {
         const waistRatioHipList = sortedList.map((item) => item.waistRatioHip);
-        const yTitle = "Relação Cintura/Quadril";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Relação Cintura/Quadril",
-            waistRatioHipList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Relação Cintura/Quadril")
+        setGraphicData(waistRatioHipList)
+        setGraphicYTitle("Relação Cintura/Quadril")
       } else if (ageAtTheMomentGraphic) {
         const ageAtTheMomentList = sortedList.map(
           (item) => item.ageAtTheMoment
         );
-        const yTitle = "Idade no Momento (anos)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Idade no Momento",
-            ageAtTheMomentList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Idade no Momento")
+        setGraphicData(ageAtTheMomentList)
+        setGraphicYTitle("Idade no Momento (anos)")
       } else if (fatMassKgGraphic) {
         const fatMassKgList = sortedList.map((item) => item.fatMass_kg);
-        const yTitle = "Massa de Gordura (kg)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic("Massa de Gordura", fatMassKgList, yTitle)
-        );
+        setGraphicTitle("Massa de Gordura")
+        setGraphicData(fatMassKgList)
+        setGraphicYTitle("Massa de Gordura (kg)")
       } else if (leanMassKgGraphic) {
         const leanMassKgList = sortedList.map((item) => item.leanMass_kg);
-        const yTitle = "Massa Magra (kg)";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic("Massa Magra", leanMassKgList, yTitle)
-        );
+        setGraphicTitle("Massa Magra")
+        setGraphicData(leanMassKgList)
+        setGraphicYTitle("Massa Magra (kg)")
       } else if (weightCmGraphic) {
         const weightCmList = sortedList.map((item) => item.weight_cm);
-        const yTitle = "Peso (cm)"; // Verifique se a unidade está correta
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic("Peso", weightCmList, yTitle)
-        );
+        setGraphicTitle("Peso")
+        setGraphicData(weightCmList)
+        setGraphicYTitle("Peso (cm)")
       } else if (heightKgGraphic) {
         const heightKgList = sortedList.map((item) => item.height_kg);
-        const yTitle = "Altura (kg)"; // Verifique se a unidade está correta
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic("Altura", heightKgList, yTitle)
-        );
+        setGraphicTitle("Altura")
+        setGraphicData(heightKgList)
+        setGraphicYTitle("Altura (kg)")
       } else if (neckCircCmGraphic) {
         const neckCircCmList = sortedList.map((item) => item.neck_circ_cm);
-        const yTitle = "Circunferência do Pescoço em cm";
-        setBodyEvaluationGraphic(
-          createBodyEvaluationGraphic(
-            "Circunferência do Pescoço",
-            neckCircCmList,
-            yTitle
-          )
-        );
+        setGraphicTitle("Circunferência do Pescoço")
+        setGraphicData(neckCircCmList)
+        setGraphicYTitle("Circunferência do Pescoço em cm")
       } else {
-        setBodyEvaluationGraphic(null);
+        setGraphicTitle("")
+        setGraphicData([])
+        setGraphicYTitle("")
       }
     }, [
     chestCircCmGraphic,
@@ -786,48 +653,48 @@ export default function Athlete(props) {
     reloadBodyEvaluationGraphic,
   ]);
 
-  const createBodyEvaluationGraphic = (title, yAxis, yTitle) => {
-    const xAxis = [];
-    console.log("yAxis lenght: ", yAxis.length);
-    console.log("type of yAxis lenght: ", typeof yAxis.length);
+  // const createBodyEvaluationGraphic = (title, yAxis, yTitle) => {
+  //   const xAxis = [];
+  //   console.log("yAxis lenght: ", yAxis.length);
+  //   console.log("type of yAxis lenght: ", typeof yAxis.length);
 
-    for (let i = 1; i <= yAxis.length; i++) {
-      xAxis.push(i);
-      console.log("xAxis: ", xAxis);
-    }
+  //   for (let i = 1; i <= yAxis.length; i++) {
+  //     xAxis.push(i);
+  //     console.log("xAxis: ", xAxis);
+  //   }
 
-    return (
-      <>
-        <Plot
-          data={[
-            {
-              x: xAxis,
-              y: yAxis,
-              type: "scatter",
-              mode: "lines+markers",
-              marker: { color: "black" },
-              name: title,
-              line: {
-                color: "#cb6ce6",
-                width: 2,
-              },
-            },
-          ]}
-          layout={{
-            width: 500,
-            height: 500,
-            title: title,
-            xaxis: {
-              title: "Progressão Temporal",
-            },
-            yaxis: {
-              title: yTitle,
-            },
-          }}
-        />
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       <Plot
+  //         data={[
+  //           {
+  //             x: xAxis,
+  //             y: yAxis,
+  //             type: "scatter",
+  //             mode: "lines+markers",
+  //             marker: { color: "black" },
+  //             name: title,
+  //             line: {
+  //               color: "#cb6ce6",
+  //               width: 2,
+  //             },
+  //           },
+  //         ]}
+  //         layout={{
+  //           width: 500,
+  //           height: 500,
+  //           title: title,
+  //           xaxis: {
+  //             title: "Progressão Temporal",
+  //           },
+  //           yaxis: {
+  //             title: yTitle,
+  //           },
+  //         }}
+  //       />
+  //     </>
+  //   );
+  // };
 
   const listAnamnesis = anamnesis.length ? (
     anamnesis.map((anamnesis) => (
@@ -887,15 +754,27 @@ export default function Athlete(props) {
           <div className={styles.leftButtons}>
             <button
               className={styles.leftButton}
-              onClick={() => setAnamnesisModalOpen(true)}
+              onClick={() => {
+                setAnamnesisModalOpen(true)
+                setReloadGraphic(!reloadGraphic);
+                setAmountWaterGraphic(false);
+                setDiasPressGraphic(false);
+                setSisPressGraphic(false);
+              }}
             >
-              Visuzalizar anamnesis
+              Visualizar anamnesis
             </button>
             <button
               className={styles.leftButton}
-              onClick={() => setBodyEvaluationModalOpen(true)}
+              onClick={() => {
+                setBodyEvaluationModalOpen(true)
+                setReloadGraphic(!reloadGraphic);
+                setAmountWaterGraphic(false);
+                setDiasPressGraphic(false);
+                setSisPressGraphic(false);
+              }}
             >
-              Visuzalizar avaliações corporais
+              Visualizar avaliações corporais
             </button>
           </div>
           <div className={styles.athlete}>
@@ -1554,7 +1433,8 @@ export default function Athlete(props) {
                   setSisPressGraphic(true);
                 }}
               ></ButtonS>
-              {graphic}
+              {/* {graphic} */}
+                <CreateGraphic title={graphicTitle} yAxis={graphicData} yTitle={graphicYTitle} ></CreateGraphic>
             </div>
           )}
           {isBodyEvaluationModalOpen && (
@@ -2314,7 +2194,8 @@ export default function Athlete(props) {
                   setNeckCircCmGraphic(true);
                 }}
               ></ButtonS>
-              {bodyEvaluationGraphic}
+              {/* {bodyEvaluationGraphic} */}
+              <CreateGraphic title={graphicTitle} yAxis={graphicData} yTitle={graphicYTitle} ></CreateGraphic>
             </div>
           )}
         </div>
