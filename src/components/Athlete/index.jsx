@@ -471,7 +471,7 @@ export default function Athlete(props) {
     }
   }, [amountWaterGraphic, sisPressGraphic, diasPressGraphic, reloadGraphic]);
 
-  // CRIA OS GRÁFICOS DOS BODY EVALUATION
+  // ATUALIZA OS DADOS DOS GRÁFICOS DE BODY EVALUATION
   useEffect(() => {
     getBodyEvaluations();
     const sortedList = bodyEvaluation.sort(

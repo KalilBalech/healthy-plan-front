@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 export default function ButtonS(props){
     return(
-        <button type="submit" className={styles.button} onClick={props.onClick}>
+        <button type="submit" className={styles.button} onClick={props.onClick} disabled={props.disabled}>
             {props.text}
         </button>
     )
@@ -12,5 +12,6 @@ export default function ButtonS(props){
 
 ButtonS.propTypes = {
     text: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool,
 };

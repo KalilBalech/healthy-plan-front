@@ -159,6 +159,7 @@ import Plot from 'react-plotly.js';
 import Plotly from 'plotly.js-dist-min';
 import { jsPDF } from 'jspdf';
 import PropTypes from 'prop-types';
+import Button from '../Button';
 
 export default function CreateGraphic({ title, yAxis, yTitle }) {
   const [xAxis, setXAxis] = useState([]);
@@ -225,9 +226,8 @@ export default function CreateGraphic({ title, yAxis, yTitle }) {
               config={{ responsive: true }}
             />
           </div>
-          <button onClick={exportToPDF} disabled={!dataReady}>
-            Exportar Gráfico como PDF
-          </button>
+          <Button onClick={exportToPDF} disabled={!dataReady} text={"Exportar Gráfico como PDF"}>
+          </Button>
         </>
       )}
     </>
