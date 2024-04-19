@@ -1,0 +1,17 @@
+.historicCard{
+    width: 100%;
+    padding: 20px;
+    margin: 20px;
+    border: 2px solid #cb6ce6;
+    border-radius: 20px;
+}
+
+.historicCard:hover{
+    box-shadow: 0 2px #cb6ce6;
+    border-bottom: 1px solid #cb6ce6;
+    cursor: pointer;
+}
+
+.contentInfo{
+    text-align: center;
+}

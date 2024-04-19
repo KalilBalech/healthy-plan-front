@@ -9,10 +9,10 @@ import styles from "./styles.module.css";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import CreateGraphic from "../createGraphic/createGraphic";
+import HistoricModal from "../historicModal/historicModal"
 
 import axios from "axios";
 
-import Plot from "react-plotly.js";
 // import { jsPDF } from 'jspdf';
 // import Plotly from 'plotly.js-dist-min';
 
@@ -26,6 +26,8 @@ export default function Athlete(props) {
   const [isCreateBodyEvaluationModalOpen, setIsCreateBodyEvaluationModalOpen] =
     useState(false);
   const [isUpdateAthleteModalOpen, setIsUpdateAthleteModalOpen] =
+    useState(false);
+  const [isHistoricModalOpen, setIsHistoricModalOpen] =
     useState(false);
 
   const [isAnamnesisModalOpen, setAnamnesisModalOpen] = useState(false);
@@ -95,7 +97,7 @@ export default function Athlete(props) {
   const [additionalObservations, setAdditionalObservations] = useState("");
   const [userExists, setUserExists] = useState(true);
 
-  const [bodyEvaluationGraphic, setBodyEvaluationGraphic] = useState(null);
+  // const [bodyEvaluationGraphic, setBodyEvaluationGraphic] = useState(null);
 
   const [ageAtTheMoment, setageAtTheMoment] = useState(null);
   const [fatMass_kg, setfatMass_kg] = useState(null);
@@ -395,7 +397,7 @@ export default function Athlete(props) {
       });
   };
 
-  const [graphic, setGraphic] = useState(null);
+  // const [graphic, setGraphic] = useState(null);
 
   const [amountWaterGraphic, setAmountWaterGraphic] = useState(false);
   const [sisPressGraphic, setSisPressGraphic] = useState(false);
@@ -788,6 +790,12 @@ export default function Athlete(props) {
               text="Adicionar Avaliação Corporal"
               onClick={() => setIsCreateBodyEvaluationModalOpen(true)}
             ></ButtonS>
+            <button
+              className={styles.editAthleteButton}
+              onClick={() => setIsHistoricModalOpen(true)}
+            >
+              Histórico de atualizações
+            </button>
           </div>
           <div className={styles.athleteButtons}>
             <button
@@ -1369,26 +1377,6 @@ export default function Athlete(props) {
                   onChange={(e) => setProvEmail(e.target.value)}
                   required={true}
                 />
-                {/* <Select
-                  name="Genero"
-                  id="Genero"
-                  placeholder="Genero"
-                  value={provSex}
-                  onChange={(e) => setProvSex(e.target.value)}
-                  required={true}
-                >
-                  <option value="Masculino">Masculino</option>
-                  <option value="Feminino">Feminino</option>
-                  <option value="Neutre">Neutre</option>
-                </Select>
-                <Input
-                  block={true}
-                  type="date"
-                  placeholder="Data de Nascimento"
-                  value={provBirthDate}
-                  onChange={(e) => setProvBirthDate(e.target.value)}
-                  required={true}
-                /> */}
                 <Button text="Enviar" />
               </form>
             </div>
@@ -2198,6 +2186,7 @@ export default function Athlete(props) {
               <CreateGraphic title={graphicTitle} yAxis={graphicData} yTitle={graphicYTitle} ></CreateGraphic>
             </div>
           )}
+          {isHistoricModalOpen && <HistoricModal setIsHistoricModalOpen={setIsHistoricModalOpen} anamnesis={anamnesis} bodyEvaluation={bodyEvaluation}></HistoricModal>}
         </div>
       )}
     </>
