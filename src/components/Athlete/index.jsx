@@ -11,6 +11,8 @@ import { useState, useEffect } from "react";
 import CreateGraphic from "../createGraphic/createGraphic";
 import HistoricModal from "../historicModal/historicModal"
 
+import emailjs from 'emailjs-com';
+
 import axios from "axios";
 
 // import { jsPDF } from 'jspdf';
@@ -127,6 +129,27 @@ export default function Athlete(props) {
     window.open(url, '_blank');
   }
 
+  const sendEmail = async (message) =>{
+    emailjs.send(
+      'service_dqx10c9', // Substitua pelo seu Service ID
+      'template_kvit88j', // Substitua pelo seu Template ID
+      {
+      name: 'Julius',
+      to_name: name,
+      from_name: 'NUTRICIONISTA KALIL',
+      // email: 'kalil.balech@ga.ita.br',
+      message
+      },
+      '0L2s5sRrU3Ly6qk-z' // Substitua pelo seu User ID
+    )
+    .then((response) => {
+      console.log('E-mail enviado com sucesso!', response.status, response.text);
+    })
+    .catch((err) => {
+      console.error('Erro ao enviar o e-mail:', err);
+    });
+  }
+
   const createAnamnesis = async (e) => {
     e.preventDefault();
     setSystolicBloodPressure(parseInt(systolicBloodPressure));
@@ -200,7 +223,9 @@ export default function Athlete(props) {
         setIsCreateAnamnesisModalOpen(false);
         if (response.status === 200 || response.status === 201) {
           console.log("ANAMNESIS CRIADA COM SUCESSO");
-          sendWhatsAppMessage(phone, `oi, ${name}! Acabei de adicionar um novo anamnesis no seu registro! Aqui estão os dados numéricos:%0AQuantidade diária de água ingerida: ${AmountWater} mls,%0APressão sistolítica: ${systolicBloodPressure} mmHg,%0APressão diastólica: ${diastolicBloodPressure} mmHg,%0AFrequencia cardíaca: ${restingHeartRate} batimentos/s,%0APor favor, continue com os treinos!%0AAté a próxima consulta!%0AAbraços!`)
+          const message = `oi, ${name}! Acabei de adicionar um novo anamnesis no seu registro! Aqui estão os dados numéricos:%0AQuantidade diária de água ingerida: ${AmountWater} mls,%0APressão sistolítica: ${systolicBloodPressure} mmHg,%0APressão diastólica: ${diastolicBloodPressure} mmHg,%0AFrequencia cardíaca: ${restingHeartRate} batimentos/s,%0APor favor, continue com os treinos!%0AAté a próxima consulta!%0AAbraços!`
+          sendWhatsAppMessage(phone, message)
+          sendEmail(message)
           setReloadAnamnesis(!reloadAnamnesis);
         }
       })
@@ -284,7 +309,9 @@ export default function Athlete(props) {
 
         if (response.status === 200 || response.status === 201) {
           alert("BODY EVALUATION CRIADA COM SUCESSO");
-          sendWhatsAppMessage(phone, `oi, ${name}! Acabei de adicionar uma nova avaliação corporal no seu registro! Aqui estão os dados numéricos:%0AGordura corporal: ${fatMass_kg} kgs,%0AMassa magra: ${leanMass_kg} kgs,%0APeso: ${weight_cm} kgs,%0AIdade corporal: ${restingHeartRate} anos,%0APor favor, continue com os treinos!%0AAté a próxima consulta!%0AAbraços!`)
+          const message = `oi, ${name}! Acabei de adicionar uma nova avaliação corporal no seu registro! Aqui estão os dados numéricos:%0AGordura corporal: ${fatMass_kg} kgs,%0AMassa magra: ${leanMass_kg} kgs,%0APeso: ${weight_cm} kgs,%0AIdade corporal: ${restingHeartRate} anos,%0APor favor, continue com os treinos!%0AAté a próxima consulta!%0AAbraços!`
+          sendWhatsAppMessage(phone, message)
+          sendEmail(message)
           setReloadBodyEvaluation(!reloadBodyEvaluation);
           setBodyEvaluationModalOpen(false);
         }
