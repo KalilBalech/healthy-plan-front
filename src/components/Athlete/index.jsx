@@ -58,15 +58,11 @@ export default function Athlete(props) {
   const [surname, setSurname] = useState(props.surname);
   const [email, setEmail] = useState(props.email);
   const [phone, setPhone] = useState(parseInt(props.phone));
-  // const [sex, setSex] = useState(props.sex);
-  // const [birthDate, setBirthDate] = useState(props.birthDate);
 
   const [provName, setProvName] = useState(props.name);
   const [provSurname, setProvSurname] = useState(props.surname);
   const [provEmail, setProvEmail] = useState(props.email);
   const [provPhone, setProvPhone] = useState(parseInt(props.phone));
-  // const [provSex, setProvSex] = useState(props.sex);
-  // const [provBirthDate, setProvBirthDate] = useState(birthDateFomated);
 
   const [isAlcoholic, setIsAlcoholic] = useState(false);
   const [isSmoker, setIsSmoker] = useState(false);
@@ -125,6 +121,11 @@ export default function Athlete(props) {
   const [rightCalf_circ_cm, setrightCalf_circ_cm] = useState(null);
   const [leftCalf_circ_cm, setleftCalf_circ_cm] = useState(null);
   const [fatPercentage, setfatPercentage] = useState(null);
+
+  const sendWhatsAppMessage = async (phone, message) =>{
+    const url = `https://wa.me/${phone}?text=${message}`
+    window.open(url, '_blank');
+  }
 
   const createAnamnesis = async (e) => {
     e.preventDefault();
@@ -199,6 +200,7 @@ export default function Athlete(props) {
         setIsCreateAnamnesisModalOpen(false);
         if (response.status === 200 || response.status === 201) {
           console.log("ANAMNESIS CRIADA COM SUCESSO");
+          sendWhatsAppMessage(phone, `oi, ${name}! Acabei de adicionar um novo anamnesis no seu registro! Aqui estão os dados numéricos:%0AQuantidade diária de água ingerida: ${AmountWater} mls,%0APressão sistolítica: ${systolicBloodPressure} mmHg,%0APressão diastólica: ${diastolicBloodPressure} mmHg,%0AFrequencia cardíaca: ${restingHeartRate} batimentos/s,%0APor favor, continue com os treinos!%0AAté a próxima consulta!%0AAbraços!`)
           setReloadAnamnesis(!reloadAnamnesis);
         }
       })
@@ -282,6 +284,7 @@ export default function Athlete(props) {
 
         if (response.status === 200 || response.status === 201) {
           alert("BODY EVALUATION CRIADA COM SUCESSO");
+          sendWhatsAppMessage(phone, `oi, ${name}! Acabei de adicionar uma nova avaliação corporal no seu registro! Aqui estão os dados numéricos:%0AGordura corporal: ${fatMass_kg} kgs,%0AMassa magra: ${leanMass_kg} kgs,%0APeso: ${weight_cm} kgs,%0AIdade corporal: ${restingHeartRate} anos,%0APor favor, continue com os treinos!%0AAté a próxima consulta!%0AAbraços!`)
           setReloadBodyEvaluation(!reloadBodyEvaluation);
           setBodyEvaluationModalOpen(false);
         }
@@ -299,8 +302,6 @@ export default function Athlete(props) {
       surname: provSurname,
       phone: provPhone,
       email: provEmail,
-      // sex: provSex,
-      // birthDate: provBirthDate,
     };
 
     await axios
@@ -396,8 +397,6 @@ export default function Athlete(props) {
         console.error("Erro ao conectar com a API:", error);
       });
   };
-
-  // const [graphic, setGraphic] = useState(null);
 
   const [amountWaterGraphic, setAmountWaterGraphic] = useState(false);
   const [sisPressGraphic, setSisPressGraphic] = useState(false);
@@ -784,11 +783,25 @@ export default function Athlete(props) {
             <p>{email}</p>
             <ButtonS
               text="Adicionar Anamnesis"
-              onClick={() => setIsCreateAnamnesisModalOpen(true)}
+              onClick={() => {
+                if (props.personalEmail == 'kalilgb152@gmail.com'){
+                  alert('Você não tem permissão de editor!')
+                }
+                else{
+                  setIsCreateAnamnesisModalOpen(true)
+                }
+                }}
             ></ButtonS>
             <ButtonS
               text="Adicionar Avaliação Corporal"
-              onClick={() => setIsCreateBodyEvaluationModalOpen(true)}
+              onClick={() => {
+                if (props.personalEmail == 'kalilgb152@gmail.com'){
+                  alert('Você não tem permissão de editor!')
+                }
+                else{
+                  setIsCreateBodyEvaluationModalOpen(true)
+                }
+              }}
             ></ButtonS>
             <button
               className={styles.editAthleteButton}
@@ -800,18 +813,27 @@ export default function Athlete(props) {
           <div className={styles.athleteButtons}>
             <button
               className={styles.editAthleteButton}
-              onClick={() => setIsUpdateAthleteModalOpen(true)}
+              onClick={() => {
+                if (props.personalEmail == 'kalilgb152@gmail.com'){
+                  alert('Você não tem permissão de editor!')
+                }
+                else{setIsUpdateAthleteModalOpen(true)}}}
             >
               Editar aluno
             </button>
             <button
               className={styles.deleteAthleteButton}
-              onClick={() => deleteAthlete()}
+              onClick={() => {
+                if (props.personalEmail == 'kalilgb152@gmail.com'){
+                  alert('Você não tem permissão de editor!')
+                }
+                else{deleteAthlete()}}}
             >
               Deletar aluno
             </button>
           </div>
-          {isCreateAnamnesisModalOpen && (
+          {isCreateAnamnesisModalOpen && 
+          (
             <div className={styles.modal}>
               <button
                 className={styles.closeButton}
@@ -1028,7 +1050,8 @@ export default function Athlete(props) {
               </form>
             </div>
           )}
-          {isCreateBodyEvaluationModalOpen && (
+          {isCreateBodyEvaluationModalOpen && 
+          (
             <div className={styles.modal}>
               <button
                 className={styles.closeButton}
@@ -1327,7 +1350,8 @@ export default function Athlete(props) {
               </form>
             </div>
           )}
-          {isUpdateAthleteModalOpen && (
+          {isUpdateAthleteModalOpen && 
+          (
             <div className={styles.modal}>
               <button
                 className={styles.closeButton}
@@ -2199,4 +2223,5 @@ Athlete.propTypes = {
   surname: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
+  personalEmail: PropTypes.string.isRequired,
 };
